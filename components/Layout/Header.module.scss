@@ -1,0 +1,12 @@
+.header {
+    height: 2rem;
+    width: 100%;
+    background-color: black;
+    display: flex;
+    align-items: center;
+}
+
+.header > * { 
+    color: white;
+    padding: 1rem;
+}

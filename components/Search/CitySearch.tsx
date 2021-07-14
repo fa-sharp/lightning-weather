@@ -3,10 +3,10 @@ import { CityCombinedDataType, CityDataType, searchCityName } from '../../data/c
 import styles from './CitySearch.module.scss'
 
 interface CitySearchProps {
-    onSubmit: FormEventHandler<HTMLButtonElement>;
+    onCitySearch: (selectedCity: CityCombinedDataType | null) => void;
 }
 
-const CitySearch = ({ onSubmit }: CitySearchProps) => {
+const CitySearch = ({ onCitySearch }: CitySearchProps) => {
 
     const [foundCities, setFoundCities] = useState<CityCombinedDataType[]>([]);
     const [selectedCity, setSelectedCity] = useState<CityCombinedDataType | null>(null);
@@ -14,13 +14,13 @@ const CitySearch = ({ onSubmit }: CitySearchProps) => {
 
     const onCitySearchChange: ChangeEventHandler<HTMLInputElement> = (event) => {
         
+        setSelectedCity(null);
         const citySearchQuery = event.target.value;
 
         if (!validateCitySearchQuery(citySearchQuery)) {
             setFoundCities([]);
             return;
         }
-
         setFoundCities(searchCityName(citySearchQuery));
     }
 
@@ -35,7 +35,7 @@ const CitySearch = ({ onSubmit }: CitySearchProps) => {
     return (
         <div className={styles.citySearch}>
             <input ref={citySearchRef} type="search" onChange={onCitySearchChange} name="citySearch" id="citySearch" placeholder="City Name"/>
-            <button type="submit" onClick={onSubmit}>Search</button>
+            <button type="submit" onClick={() => onCitySearch(selectedCity)}>Search</button>
             {foundCities.length !== 0 && <div className={styles.citySearchItemList}>
                 {foundCities.map(city =>
                     <button className={styles.citySearchItem}

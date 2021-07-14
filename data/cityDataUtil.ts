@@ -7,14 +7,14 @@ export type CityDataType = {
     country: string;
 }
 
-export type CityCombinedDataType = {
-    id: number;
+export type CityCombinedDataType = CityDataType & {
     combinedName: string;
 }
 
 const cityList = cityListJson as CityDataType[];
 const citySearchList: CityCombinedDataType[] = cityList.map(city => {
-    return {combinedName: `${city.name}, ${city.state === "" ? "" : city.state + ", "}${city.country}`, id: city.id};
+    return {...city,
+        combinedName: `${city.name}, ${city.state === "" ? "" : city.state + ", "}${city.country}`};
 });
 
 /** Searches all city names with the given string and returns up to 10 cities. No matching case by default */

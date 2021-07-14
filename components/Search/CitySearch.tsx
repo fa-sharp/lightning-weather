@@ -1,15 +1,18 @@
-import React, { useState } from 'react'
+import React, { ChangeEventHandler, FormEventHandler, useRef, useState } from 'react'
 import { CityCombinedDataType, CityDataType, searchCityName } from '../../data/cityDataUtil'
+import styles from './CitySearch.module.scss'
 
 interface CitySearchProps {
-    onSubmit: React.FormEventHandler<HTMLButtonElement>;
+    onSubmit: FormEventHandler<HTMLButtonElement>;
 }
 
-const CitySearch = ({onSubmit}: CitySearchProps) => {
+const CitySearch = ({ onSubmit }: CitySearchProps) => {
 
     const [foundCities, setFoundCities] = useState<CityCombinedDataType[]>([]);
+    const [selectedCity, setSelectedCity] = useState<CityCombinedDataType | null>(null);
+    const citySearchRef = useRef<HTMLInputElement>(null);
 
-    const onCitySearchChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const onCitySearchChange: ChangeEventHandler<HTMLInputElement> = (event) => {
         
         const citySearchQuery = event.target.value;
 
@@ -21,14 +24,27 @@ const CitySearch = ({onSubmit}: CitySearchProps) => {
         setFoundCities(searchCityName(citySearchQuery));
     }
 
+    const onCitySelected = (city: CityCombinedDataType) => {
+        setSelectedCity(city);
+        if (citySearchRef.current)
+            citySearchRef.current.value = city.combinedName;
+        setFoundCities([]);
+    }
+
 
     return (
-        <div>
-            <input type="search" onChange={onCitySearchChange} name="citySearch" id="citySearch" placeholder="City Name"/>
+        <div className={styles.citySearch}>
+            <input ref={citySearchRef} type="search" onChange={onCitySearchChange} name="citySearch" id="citySearch" placeholder="City Name"/>
             <button type="submit" onClick={onSubmit}>Search</button>
-            {foundCities.map(city => 
-                <div onClick={() => console.log(city.id)} key={city.id}>{city.combinedName}</div>
-            )}
+            {foundCities.length !== 0 && <div className={styles.citySearchItemList}>
+                {foundCities.map(city =>
+                    <button className={styles.citySearchItem}
+                        key={city.id}
+                        onClick={() => onCitySelected(city)}>
+                            {city.combinedName}
+                    </button>
+                )}
+            </div>}
         </div>
     )
 }

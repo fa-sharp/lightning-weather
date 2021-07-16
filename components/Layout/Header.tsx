@@ -7,10 +7,10 @@ interface HeaderProps {
 
 const Header = (props: HeaderProps) => {
     return (
-        <div className={styles.header}>
+        <header className={styles.header}>
             <a href="http://google.com" target="_blank" rel="noopener noreferrer">Sample Link</a>
             <a href="http://google.com" target="_blank" rel="noopener noreferrer">Sample Link</a>
-        </div>
+        </header>
     )
 }
 

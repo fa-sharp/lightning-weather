@@ -18,15 +18,14 @@ function Weather({}: Props) {
             return;
         else
             setLoadedCity(selectedCity);
-            
     };
     
     return (
         <Layout>
-            <div className={styles.weather}>
+            <main className={styles.weather}>
                 <CitySearch onCitySearch={onCitySearch}/>
-                {loadedCity && <WeatherDisplay city={loadedCity} />}
-            </div>
+                {loadedCity && <WeatherDisplay city={loadedCity} units="imperial" />}
+            </main>
         </Layout>
     )
 }

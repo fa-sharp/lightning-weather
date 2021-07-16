@@ -1,31 +1,32 @@
 import React from 'react'
 import { CityCombinedDataType } from '../../data/cityDataUtil'
-import useWeatherFetch from '../../data/useWeatherFetch'
+import useWeatherFetch, { WeatherUnits } from '../../data/useWeatherFetch'
+import styles from './WeatherDisplay.module.scss'
 
 interface WeatherDisplayProps {
-    city: CityCombinedDataType;
+    city: CityCombinedDataType
+    units?: WeatherUnits
 }
 
-const WeatherDisplay = ({ city }: WeatherDisplayProps) => {
+const WeatherDisplay = ({ city, units="imperial" }: WeatherDisplayProps) => {
 
-    const [data, error] = useWeatherFetch(city.id, "imperial");
+    const [data, error] = useWeatherFetch(city.id, units);
 
     return (
         !city ? null :
-            <div>
-                Name: {city.name}
-                <br />
+            <section className={styles.weatherDisplay}>
+                <h2>{city.name}{city.state !== "" && `, ${city.state}`}</h2>
                 Country: {city.country}
                 <br />
-                Data: {error ? "Failed to load"
-                        : !data ? "Loading..."
+                {error ? "Failed to load"
+                        : !data ? "Loading data..."
                         : <div>
-                            Temp: {data.main.temp}<br />
+                            Temp: {parseInt(data.main.temp)} {units==="imperial" ? "°F" : "°C" }<br />
                             Condition: {data.weather[0].main}<br />
                             Description: {data.weather[0].description}
                         </div>
                         }
-            </div>
+            </section>
     )
 }
 

@@ -6,7 +6,7 @@ interface HeaderProps {
     
 }
 
-const routeToSearch = '/weather';
+const routeToSearch = '/search';
 
 const Header = (props: HeaderProps) => {
     return (

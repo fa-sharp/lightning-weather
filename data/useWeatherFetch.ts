@@ -1,6 +1,6 @@
 import useSWR from 'swr';
+import { WeatherUnits } from './weatherDataTypes';
 
-export type WeatherUnits = "imperial" | "metric";
 const BASE_URL = "/api/weather";
 
 const fetcher = (url: string) => fetch(url).then(res => {

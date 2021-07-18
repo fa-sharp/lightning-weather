@@ -16,7 +16,7 @@ export default async function weatherHandler(
                 weatherResponse.json().then(data =>
                     res.status(weatherResponse.status).send(data)),
             err => {
-                res.status(404).json({ message: "Error fetching weather!", code: err.code});
+                res.status(404).json({ message: "Network/fetch error!", code: err.code});
             }
         );
 }

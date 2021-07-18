@@ -1,6 +1,6 @@
 import React from 'react'
-import styles from './WeatherDisplay.module.scss'
-import { WeatherUnits } from '../../data/useWeatherFetch'
+import { WeatherUnits } from '../../data/weatherDataTypes';
+import styles from './WeatherDisplay.module.scss';
 
 interface CurrentWeatherProps {
     data: any
@@ -9,7 +9,7 @@ interface CurrentWeatherProps {
 
 const CurrentWeather = ({data, units}: CurrentWeatherProps) => {
 
-    const {main: {temp, feels_like, humidity}, weather, clouds} = data;
+    const {main: {temp, feels_like, humidity}, weather, clouds, timezone} = data;
 
     return (
         <div className={styles.currentWeather}>
@@ -22,13 +22,20 @@ const CurrentWeather = ({data, units}: CurrentWeatherProps) => {
                 <h3>{`${weather[0].main}`}</h3>
                 {`"${weather[0].description}"`}
             </div>
-            <div>
+            <aside>
+                {`${getLocalTime(timezone)}`}<br/><br/>
                 {`Feels like: ${Math.round(feels_like)}${(units === "imperial") ? " °F" : " °C"}`}<br/>
                 {`Humidity: ${humidity}%`}<br/>
                 {`Clouds: ${clouds.all}%`}
-            </div>
+            </aside>
         </div>
     )
+}
+
+const getLocalTime = (timeOffset: number) => {
+    const localTime = new Date(Date.now() + (timeOffset*1000));
+    const formattedTime = new Intl.DateTimeFormat('en-US', {weekday: 'short', hour: 'numeric', minute: '2-digit', timeZone: 'UTC'}).format(localTime);
+    return formattedTime;
 }
 
 export default CurrentWeather

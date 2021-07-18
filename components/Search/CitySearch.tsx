@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler, FormEventHandler, useRef, useState } from 'react'
 import useSWR from 'swr';
-import { CityCombinedDataType } from '../../data/cityDataUtil'
+import { CityCombinedDataType } from '../../data/cityDataTypes'
 import styles from './CitySearch.module.scss'
 
 interface CitySearchProps {

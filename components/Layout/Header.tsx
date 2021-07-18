@@ -1,16 +1,23 @@
 import React from 'react'
+import Link from 'next/link'
 import styles from './Header.module.scss'
 
 interface HeaderProps {
     
 }
 
+const routeToSearch = '/weather';
+
 const Header = (props: HeaderProps) => {
     return (
-        <header className={styles.header}>
-            <a href="http://google.com" target="_blank" rel="noopener noreferrer">Sample Link</a>
-            <a href="http://google.com" target="_blank" rel="noopener noreferrer">Sample Link</a>
-        </header>
+        <nav className={styles.header}>
+            <Link href="/">
+                <a>Home</a>
+            </Link>
+            <Link href={routeToSearch}>
+                <a>Search</a>
+            </Link>
+        </nav>
     )
 }
 

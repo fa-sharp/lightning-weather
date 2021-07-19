@@ -42,7 +42,7 @@
     }
 }
 
-#addButton {
+.addButton {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -51,6 +51,23 @@
 
     border: solid 1px transparent;
     border-radius: 10px;
+
+    background-color: rgb(245, 181, 103);
+
+    &:hover {
+        border: solid 1px black; 
+    }
+}
+
+.removeButton {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+
+    cursor: pointer;
+
+    border: solid 1px transparent;
+    border-radius: 50%;
 
     background-color: rgb(245, 181, 103);
 

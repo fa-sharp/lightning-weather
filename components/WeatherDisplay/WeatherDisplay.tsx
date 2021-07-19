@@ -8,27 +8,40 @@ import styles from './WeatherDisplay.module.scss'
 interface WeatherDisplayProps {
     city: CityCombinedDataType
     units?: WeatherUnits
+
     addButton?: boolean
+    addCity?: (city: CityCombinedDataType) => void
+
+    removeButton?: boolean
+    removeCity?: (city: CityCombinedDataType) => void
 }
 
-const WeatherDisplay = ({ city, units="imperial", addButton=true }: WeatherDisplayProps) => {
+const WeatherDisplay = ({ city, units="imperial", addButton=false, removeButton=false, addCity, removeCity }: WeatherDisplayProps) => {
 
     const [data, error] = useWeatherFetch(city.id, units);
 
     return (
-        !city ? null :
-            <section className={styles.weatherDisplay}>
-             
-                <h2>{`${city.name}${(city.state !== "") ? (', ' + city.state) : ""}`}</h2>
-                
-                {error ? "Failed to load"
-                    : !data ? "Loading data..."
-                    : (<CurrentWeather data={data} units={units} />)
-                }
+        <section className={styles.weatherDisplay}>
+            
+            <h2>{`${city.name}${(city.state !== "") ? (', ' + city.state) : ""}`}</h2>
+            
+            {error ? "Failed to load"
+                : !data ? "Loading data..."
+                : (<CurrentWeather data={data} units={units} />)
+            }
 
-
-                {addButton && <button id={styles.addButton}>+ Add to Home</button>}
-            </section>
+            {addButton && 
+                <button className={styles.addButton}
+                    onClick={() => addCity ? addCity(city) : null} >
+                        + Add to Home
+                </button>}
+            
+            {removeButton &&
+                <button className={styles.removeButton}
+                onClick={() => removeCity ? removeCity(city) : null} >
+                    X
+            </button>}
+        </section>
     )
 }
 

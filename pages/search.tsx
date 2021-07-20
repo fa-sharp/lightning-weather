@@ -5,6 +5,7 @@ import CitySearch from '../components/Search/CitySearch'
 import WeatherDisplay from '../components/WeatherDisplay/WeatherDisplay';
 import { CityCombinedDataType } from '../data/cityDataTypes';
 import useLocalStorage from '../data/useLocalStorage';
+import { WeatherUnits } from '../data/userPrefDataTypes';
 import styles from '../styles/Search.module.scss'
 
 const Search = () => {
@@ -25,7 +26,8 @@ const Search = () => {
             <main className={styles.weather}>
                 <CitySearch onCitySearch={onCitySearch}/>
                 {loadedCity && 
-                    <WeatherDisplay city={loadedCity} units="imperial" addButton={true} 
+                    <WeatherDisplay city={loadedCity} units={WeatherUnits.IMPERIAL}
+                        addButton={true} 
                         addCity={(city) => {
                             addCity(city);
                             router.push('/'); 

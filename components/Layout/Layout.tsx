@@ -11,8 +11,8 @@ const Layout = ({ children }: LayoutProps) => {
     return (
         <div className={styles.pageContainer}>
             <Head>
-                <title>My Weather App</title>
-                <meta name="description" content="A little experiment" />
+                <title>Lightning Weather</title>
+                <meta name="description" content="A little weather app" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header />

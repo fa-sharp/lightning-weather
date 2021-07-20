@@ -1,5 +1,5 @@
 import React from 'react'
-import { WeatherUnits } from '../../data/weatherDataTypes';
+import { WeatherUnits } from '../../data/userPrefDataTypes';
 import styles from './WeatherDisplay.module.scss';
 
 interface CurrentWeatherProps {
@@ -18,13 +18,13 @@ const CurrentWeather = ({data, units}: CurrentWeatherProps) => {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={`/icons/${weather[0].icon}.png`} alt="weather condition icon"></img>
                 </div>
-                <h3>{`${Math.round(temp)}${(units === "imperial") ? " °F" : " °C"}`}</h3>
+                <h3>{`${Math.round(temp)}${(units === WeatherUnits.IMPERIAL) ? " °F" : " °C"}`}</h3>
                 <h3>{`${weather[0].main}`}</h3>
-                {`"${weather[0].description}"`}
+                {`${weather[0].description}`}
             </div>
-            <aside>
+            <aside className={styles.weatherDetails}>
                 {`${getLocalTime(timezone)}`}<br/><br/>
-                {`Feels like: ${Math.round(feels_like)}${(units === "imperial") ? " °F" : " °C"}`}<br/>
+                {`Feels like: ${Math.round(feels_like)}${(units === WeatherUnits.IMPERIAL) ? " °F" : " °C"}`}<br/>
                 {`Humidity: ${humidity}%`}<br/>
                 {`Clouds: ${clouds.all}%`}
             </aside>

@@ -1,6 +1,6 @@
-import type { GetStaticProps, NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next'
 import cityListJson from '../../data/city.list.formatted.json'
-import { CityCombinedDataType, CityDataType } from '../../data/cityDataTypes';
+import { CityCombinedDataType } from '../../data/cityDataTypes';
 
 const cityList = cityListJson as CityCombinedDataType[];
 

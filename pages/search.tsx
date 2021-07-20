@@ -4,12 +4,12 @@ import Layout from '../components/Layout/Layout'
 import CitySearch from '../components/Search/CitySearch'
 import WeatherDisplay from '../components/WeatherDisplay/WeatherDisplay';
 import { CityCombinedDataType } from '../data/cityDataTypes';
-import useLocalStorageCities from '../data/useLocalStorageCities';
+import useLocalStorage from '../data/useLocalStorage';
 import styles from '../styles/Search.module.scss'
 
 const Search = () => {
 
-    const { addCity } = useLocalStorageCities();
+    const { addCity } = useLocalStorage();
     const [loadedCity, setLoadedCity] = useState<CityCombinedDataType | null>(null);
     const router = useRouter();
 

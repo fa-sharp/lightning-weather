@@ -2,12 +2,12 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '../components/Layout/Layout'
 import MultiCityDisplay from '../components/MultiCityDisplay/MultiCityDisplay'
-import useLocalStorageCities from '../data/useLocalStorageCities'
+import useLocalStorage from '../data/useLocalStorage'
 import styles from '../styles/Home.module.scss'
 
 export default function Home() {
 
-  const { savedCities, addCity, removeCity } = useLocalStorageCities();
+  const { savedCities, addCity, removeCity } = useLocalStorage();
 
   return (
     <Layout>

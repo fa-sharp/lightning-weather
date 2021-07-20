@@ -1,4 +1,5 @@
-import React, { ChangeEventHandler, FormEventHandler, useRef, useState } from 'react'
+import React, { ChangeEventHandler, useEffect, useMemo, useRef, useState } from 'react'
+import { debounce } from 'lodash';
 import useSWR from 'swr';
 import { CityCombinedDataType } from '../../data/cityDataTypes'
 import styles from './CitySearch.module.scss'
@@ -17,13 +18,15 @@ const CitySearch = ({ onCitySearch }: CitySearchProps) => {
 
     const citySearchRef = useRef<HTMLInputElement>(null);
 
-    const onCitySearchChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const onSearchChange: ChangeEventHandler<HTMLInputElement> = (event) => {
         setSelectedCity(null);
 
         const citySearchQuery = event.target.value;
         setCurrentQuery(citySearchQuery);
         setValidQuery(validateCitySearchQuery(citySearchQuery));
     }
+
+    const debouncedOnSearchChange = useMemo(() => debounce(onSearchChange, 350), []);
 
     const onCitySelected = (city: CityCombinedDataType) => {
         setSelectedCity(city);
@@ -32,18 +35,23 @@ const CitySearch = ({ onCitySearch }: CitySearchProps) => {
             citySearchRef.current.value = city.combinedName;
     }
 
+    useEffect(() => {
+        console.log(currentQuery);
+    }, [currentQuery])
 
     return (
         <section className={styles.citySearch}>
-            <label htmlFor={styles.citySearchInput}>Search cities: </label>
+            <label className={styles.citySearchLabel} htmlFor={styles.citySearchInput}>Search cities: </label>
             <span className={styles.citySearchContainer}>
-                <input ref={citySearchRef} name="citySearch" id={styles.citySearchInput}
-                    autoComplete="off" type="search" onChange={onCitySearchChange} placeholder="City Name"/>
+                <input ref={citySearchRef} id={styles.citySearchInput} name="citySearch" placeholder="City Name"
+                    autoComplete="off" type="search" onChange={debouncedOnSearchChange} />
                 {/* <button type="submit" onClick={() => onCitySearch(selectedCity)}>Search</button> */}
                 
                 {validQuery && !selectedCity && (
                     cityDataError ? <div>Failed to load cities!</div>
+
                         : !cityDataList ? <div>Loading cities...</div>
+                        
                         : <div className={styles.citySearchItemList}>
                             {searchCities(currentQuery, cityDataList)?.map(city =>
                                 <button className={styles.citySearchItem} key={city.id}
@@ -58,13 +66,15 @@ const CitySearch = ({ onCitySearch }: CitySearchProps) => {
 }
 
 const citySearchRegex = new RegExp(/^[a-zA-Z ,]+$/); // for now, only a-z characters but will need to expand to include accents, etc.
-const validateCitySearchQuery = (searchQuery: string) => searchQuery.length > 1 && citySearchRegex.test(searchQuery);
+const validateCitySearchQuery = (searchQuery: string) => searchQuery.length > 1;
 
 const searchCities = (citySearchQuery: string, cityDataList: CityCombinedDataType[]) => {
     const foundCities = cityDataList
-        .filter(cityData => cityData.combinedName.toLowerCase().startsWith(citySearchQuery.toLowerCase()))
+        .filter(cityData => normalizeString(cityData.combinedName).startsWith(normalizeString(citySearchQuery)))
         .slice(0,9);
     return foundCities.length !== 0 ? foundCities : null;
 }
+
+const normalizeString = (str: string) => str.toLowerCase();
 
 export default CitySearch

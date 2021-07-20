@@ -5,6 +5,10 @@
     font-size: 1.1rem;
 }
 
+.citySearchLabel {
+    flex: 0 0 auto;
+}
+
 #citySearchInput {
     border: 2px solid black;
     border-radius: 10px;
@@ -19,7 +23,7 @@
 .citySearchItemList {
     font-size: 1rem;
     border: 1px solid black;
-    border-radius: 0 0 4px 4px;
+    border-radius: 4px;
     box-shadow: 0 1px 2px;
     padding: 2px;
 }
@@ -28,10 +32,11 @@
     display: block;
     cursor: pointer;
     border: none;
+    border-radius: 5px;
     background: unset;
-    padding: 3px;
+    padding: 3px 4px;
 
     &:hover {
-        background-color: bisque;
+        background-color: #e2e2e2;
     }
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { CityCombinedDataType } from '../../data/cityDataTypes'
 import useWeatherFetch from '../../data/useWeatherFetch'
-import { WeatherUnits } from '../../data/weatherDataTypes'
+import { WeatherUnits } from '../../data/userPrefDataTypes'
 import CurrentWeather from './CurrentWeather'
 import styles from './WeatherDisplay.module.scss'
 
@@ -16,7 +16,7 @@ interface WeatherDisplayProps {
     removeCity?: (city: CityCombinedDataType) => void
 }
 
-const WeatherDisplay = ({ city, units="imperial", addButton=false, removeButton=false, addCity, removeCity }: WeatherDisplayProps) => {
+const WeatherDisplay = ({ city, units=WeatherUnits.IMPERIAL, addButton=false, removeButton=false, addCity, removeCity }: WeatherDisplayProps) => {
 
     const [data, error] = useWeatherFetch(city.id, units);
 
@@ -37,10 +37,10 @@ const WeatherDisplay = ({ city, units="imperial", addButton=false, removeButton=
                 </button>}
             
             {removeButton &&
-                <button className={styles.removeButton}
-                onClick={() => removeCity ? removeCity(city) : null} >
+                <button className={styles.removeButton} title="Remove" aria-label="Remove city"
+                    onClick={() => removeCity ? removeCity(city) : null} >
                     X
-            </button>}
+                </button>}
         </section>
     )
 }

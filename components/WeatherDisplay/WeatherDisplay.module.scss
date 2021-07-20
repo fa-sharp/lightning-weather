@@ -5,16 +5,17 @@
     flex-direction: column;
     align-items: center;
 
-    border: solid 1px black;
+    box-shadow: 0 0 7px 1px #6f6f6f;
     border-radius: 10px;
     padding: 5px;
 
-    background-color: #fff9dd;
+    background: #d5fffb;
+    background: linear-gradient(144deg, #edfbfe 0%, #9eefff 100%);
 
     text-align: center;
 
     h2 {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         margin: 5px;
         padding: 0;
     }
@@ -24,6 +25,10 @@
         margin: 0;
         padding: 0;
     }
+}
+
+.weatherDetails {
+    font-size: .9rem;
 }
 
 .currentWeather {
@@ -42,6 +47,8 @@
     }
 }
 
+
+// BUTTONS
 .addButton {
     position: absolute;
     bottom: 0;
@@ -51,8 +58,6 @@
 
     border: solid 1px transparent;
     border-radius: 10px;
-
-    background-color: rgb(245, 181, 103);
 
     &:hover {
         border: solid 1px black; 
@@ -69,7 +74,8 @@
     border: solid 1px transparent;
     border-radius: 50%;
 
-    background-color: rgb(245, 181, 103);
+    background: none;
+    color: gray;
 
     &:hover {
         border: solid 1px black; 

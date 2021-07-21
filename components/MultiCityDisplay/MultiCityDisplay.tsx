@@ -7,12 +7,13 @@ import styles from './MultiCityDisplay.module.scss'
 interface MultiCityProps {
     cities: City[]
     units: WeatherUnits
+    withColor?: boolean
     removeCity: (city: City) => void
 }
 
-const MultiCityDisplay = ({cities, units, removeCity}: MultiCityProps) => {
+const MultiCityDisplay = ({cities, units, withColor=false, removeCity}: MultiCityProps) => {
     return (
-        <div className={styles.grid}>
+        <div className={`${styles.grid} ${withColor ? styles.withColor : ""}`}>
             {cities.map(city => 
                 <WeatherDisplay city={city} key={city.id} units={units} 
                     removeButton={true} removeCity={removeCity} />)}

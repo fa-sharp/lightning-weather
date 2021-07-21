@@ -11,6 +11,22 @@
         min-width: 280px;
         min-height: 220px;
     }
+
+    // Optional colors for city grid (a little fun with gradients):
+    &.withColor {
+        --gradientAngle: 144deg;
+        --gradientStart: 46%;
+        --gradientEnd: 100%;
+        --cityBackground1: linear-gradient(var(--gradientAngle), hsl(190, 100%, 98%) var(--gradientStart), hsl(190, 100%, 85%) var(--gradientEnd)), #d5fffb;
+        --cityBackground2: linear-gradient(var(--gradientAngle), hsl(150, 100%, 98%) var(--gradientStart), hsl(150, 100%, 85%) var(--gradientEnd)), #d5fffb;
+        --cityBackground3: linear-gradient(var(--gradientAngle), hsl(260, 100%, 98%) var(--gradientStart), hsl(260, 100%, 85%) var(--gradientEnd)), #d5fffb;
+        --cityBackground4: linear-gradient(var(--gradientAngle), hsl(330, 100%, 98%) var(--gradientStart), hsl(330, 100%, 85%) var(--gradientEnd)), #d5fffb;
+    
+        & > :nth-child(1) {background: var(--cityBackground1)}
+        & > :nth-child(2) {background: var(--cityBackground2)}
+        & > :nth-child(3) {background: var(--cityBackground3)}
+        & > :nth-child(4) {background: var(--cityBackground4)}
+    }
 }
 
 .noCitiesButton {

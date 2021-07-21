@@ -11,7 +11,7 @@ const DEFAULT_USER_PREFS = {units: "imperial"};
 
 const useLocalStorage = () => {
 
-    const [savedCities, setSavedCities] = useState<City[] | null>(null);
+    const [savedCities, setSavedCities] = useState<City[]>([]);
 
     // Retrieve saved cities from local storage on first load
     useEffect(() => {

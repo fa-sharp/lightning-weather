@@ -4,7 +4,7 @@ import Image from 'next/image'
 import addIcon from '../assets/addIcon.svg'
 import Layout from '../components/Layout/Layout'
 import MultiCityDisplay from '../components/MultiCityDisplay/MultiCityDisplay'
-import useLocalStorage from '../data/useLocalStorage'
+import useLocalStorage, { MAX_SAVED_CITIES } from '../data/useLocalStorage'
 import { WeatherUnits } from '../data/DataTypes'
 import styles from '../styles/Home.module.scss'
 
@@ -19,13 +19,14 @@ export default function Home() {
           Lightning ⚡️ Weather
         </h1>
 
-        {savedCities && <MultiCityDisplay cities={savedCities} units={WeatherUnits.IMPERIAL} removeCity={removeCity} />}
+        {<MultiCityDisplay cities={savedCities} units={WeatherUnits.IMPERIAL} removeCity={removeCity} />}
 
-        <Link href="/search">
-          <a className={styles.addCityLink} title="Add City">
-            <Image src={addIcon} alt="Add City Icon"></Image>
-          </a>
-        </Link>
+        {(savedCities.length < MAX_SAVED_CITIES) &&
+          <Link href="/search">
+            <a className={styles.addCityLink} aria-label="Add City" title="Add City">
+              <span className="material-icons md-48 gray-hover">add_circle</span>
+            </a>
+          </Link>}
       </main>
     </Layout>
   )

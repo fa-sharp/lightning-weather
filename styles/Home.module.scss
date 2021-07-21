@@ -35,16 +35,7 @@
 .addCityLink {
   position: fixed;
   bottom: 3rem;
-  right: 2rem;
-
-  & > * {
-    height: 2.5rem;
-    width: 2.5rem;
-  }
-
-  &:hover {
-
-  }
+  right: 3rem;
 }
 
 .logo {

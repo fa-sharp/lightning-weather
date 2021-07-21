@@ -7,6 +7,7 @@ import styles from './WeatherDisplay.module.scss'
 interface WeatherDisplayProps {
     city: City
     units?: WeatherUnits
+    withColor?: boolean
 
     addButton?: boolean
     addCity?: (city: City) => void
@@ -15,14 +16,15 @@ interface WeatherDisplayProps {
     removeCity?: (city: City) => void
 }
 
-const WeatherDisplay = ({ city, units=WeatherUnits.IMPERIAL, addButton=false, removeButton=false, addCity, removeCity }: WeatherDisplayProps) => {
+const WeatherDisplay = ({ city, units=WeatherUnits.IMPERIAL, withColor=false, addButton=false, removeButton=false, addCity, removeCity }: WeatherDisplayProps) => {
 
     const [data, error] = useWeatherFetch(city.id, units);
     
     const cityTitle = `${city.name}${(city.state !== "") ? (', ' + city.state) : ""}`;
 
     return (
-        <section className={styles.weatherDisplay} aria-label={cityTitle}>
+        <section className={`${styles.weatherDisplay} ${withColor ? styles.withColor : ""}`}
+            aria-label={"Weather in " + cityTitle}>
             
             <h2>{cityTitle}</h2>
             

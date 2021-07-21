@@ -19,3 +19,17 @@ a {
     text-decoration: underline;
   }
 }
+
+.material-icons {
+  &.md-24 { font-size: 24px; }
+  &.md-36 { font-size: 36px; }
+  &.md-48 { font-size: 48px; }
+
+  &.gray-hover {
+    color: hsla(0, 0%, 24%, 0.6);
+
+    &:hover {
+      color: hsl(0, 0%, 23%);
+    }
+  }
+}

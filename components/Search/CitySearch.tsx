@@ -1,20 +1,20 @@
 import React, { ChangeEventHandler, useEffect, useMemo, useRef, useState } from 'react'
 import { debounce } from 'lodash';
 import useSWR from 'swr';
-import { CityCombinedDataType } from '../../data/cityDataTypes'
+import { City } from '../../data/DataTypes'
 import styles from './CitySearch.module.scss'
 
 interface CitySearchProps {
-    onCitySearch: (selectedCity: CityCombinedDataType | null) => void;
+    onCitySearch: (selectedCity: City | null) => void;
 }
 
 const CitySearch = ({ onCitySearch }: CitySearchProps) => {
 
-    const { data: cityDataList, error: cityDataError } = useSWR<CityCombinedDataType[]>('/api/cities', { revalidateOnFocus: false });
+    const { data: cityDataList, error: cityDataError } = useSWR<City[]>('/api/cities', { revalidateOnFocus: false });
 
     const [currentQuery, setCurrentQuery] = useState("");
     const [validQuery, setValidQuery] = useState(false);
-    const [selectedCity, setSelectedCity] = useState<CityCombinedDataType | null>(null);
+    const [selectedCity, setSelectedCity] = useState<City | null>(null);
 
     const citySearchRef = useRef<HTMLInputElement>(null);
 
@@ -28,7 +28,7 @@ const CitySearch = ({ onCitySearch }: CitySearchProps) => {
 
     const debouncedOnSearchChange = useMemo(() => debounce(onSearchChange, 350), []);
 
-    const onCitySelected = (city: CityCombinedDataType) => {
+    const onCitySelected = (city: City) => {
         setSelectedCity(city);
         onCitySearch(city);
         if (citySearchRef.current)
@@ -68,7 +68,7 @@ const CitySearch = ({ onCitySearch }: CitySearchProps) => {
 const citySearchRegex = new RegExp(/^[a-zA-Z ,]+$/); // for now, only a-z characters but will need to expand to include accents, etc.
 const validateCitySearchQuery = (searchQuery: string) => searchQuery.length > 1;
 
-const searchCities = (citySearchQuery: string, cityDataList: CityCombinedDataType[]) => {
+const searchCities = (citySearchQuery: string, cityDataList: City[]) => {
     const foundCities = cityDataList
         .filter(cityData => normalizeString(cityData.combinedName).startsWith(normalizeString(citySearchQuery)))
         .slice(0,9);

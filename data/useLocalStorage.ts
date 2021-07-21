@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useSWR from "swr";
-import { CityCombinedDataType } from "./cityDataTypes";
+import { City } from "./DataTypes";
 
 const CITIES_KEY = "savedCities";
 export const MAX_SAVED_CITIES = 4;
@@ -11,7 +11,7 @@ const DEFAULT_USER_PREFS = {units: "imperial"};
 
 const useLocalStorage = () => {
 
-    const [savedCities, setSavedCities] = useState<CityCombinedDataType[] | null>(null);
+    const [savedCities, setSavedCities] = useState<City[] | null>(null);
 
     // Retrieve saved cities from local storage on first load
     useEffect(() => {
@@ -19,7 +19,7 @@ const useLocalStorage = () => {
         setSavedCities(savedCitiesStorage ? JSON.parse(savedCitiesStorage) : DEFAULT_CITIES);
     }, []);
     
-    const addCity = (newCity: CityCombinedDataType) => {
+    const addCity = (newCity: City) => {
         // Return if city already saved, or there are already max saved cities
         if (!savedCities || savedCities.length === MAX_SAVED_CITIES || savedCities.find(city => city.id === newCity.id))
             return;
@@ -30,7 +30,7 @@ const useLocalStorage = () => {
         localStorage.setItem(CITIES_KEY, JSON.stringify(newSavedCities));
     }
 
-    const removeCity = (cityToRemove: CityCombinedDataType) => {
+    const removeCity = (cityToRemove: City) => {
         if (!savedCities)
             return;
 

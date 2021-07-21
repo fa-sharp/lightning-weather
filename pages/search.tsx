@@ -3,18 +3,17 @@ import React, { useState } from 'react'
 import Layout from '../components/Layout/Layout'
 import CitySearch from '../components/Search/CitySearch'
 import WeatherDisplay from '../components/WeatherDisplay/WeatherDisplay';
-import { CityCombinedDataType } from '../data/cityDataTypes';
+import { City, WeatherUnits } from '../data/DataTypes';
 import useLocalStorage from '../data/useLocalStorage';
-import { WeatherUnits } from '../data/userPrefDataTypes';
 import styles from '../styles/Search.module.scss'
 
 const Search = () => {
 
     const { addCity } = useLocalStorage();
-    const [loadedCity, setLoadedCity] = useState<CityCombinedDataType | null>(null);
+    const [loadedCity, setLoadedCity] = useState<City | null>(null);
     const router = useRouter();
 
-    const onCitySearch = (selectedCity: CityCombinedDataType | null) => {
+    const onCitySearch = (selectedCity: City | null) => {
         if (!selectedCity) // For now, nothing happens if user hasn't selected a city from the dropdown
             return;
         else

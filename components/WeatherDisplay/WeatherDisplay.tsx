@@ -1,29 +1,30 @@
 import React from 'react'
-import { CityCombinedDataType } from '../../data/cityDataTypes'
+import { City, WeatherUnits } from '../../data/DataTypes'
 import useWeatherFetch from '../../data/useWeatherFetch'
-import { WeatherUnits } from '../../data/userPrefDataTypes'
 import CurrentWeather from './CurrentWeather'
 import styles from './WeatherDisplay.module.scss'
 
 interface WeatherDisplayProps {
-    city: CityCombinedDataType
+    city: City
     units?: WeatherUnits
 
     addButton?: boolean
-    addCity?: (city: CityCombinedDataType) => void
+    addCity?: (city: City) => void
 
     removeButton?: boolean
-    removeCity?: (city: CityCombinedDataType) => void
+    removeCity?: (city: City) => void
 }
 
 const WeatherDisplay = ({ city, units=WeatherUnits.IMPERIAL, addButton=false, removeButton=false, addCity, removeCity }: WeatherDisplayProps) => {
 
     const [data, error] = useWeatherFetch(city.id, units);
+    
+    const cityTitle = `${city.name}${(city.state !== "") ? (', ' + city.state) : ""}`;
 
     return (
-        <section className={styles.weatherDisplay}>
+        <section className={styles.weatherDisplay} aria-label={cityTitle}>
             
-            <h2>{`${city.name}${(city.state !== "") ? (', ' + city.state) : ""}`}</h2>
+            <h2>{cityTitle}</h2>
             
             {error ? "Failed to load"
                 : !data ? "Loading data..."

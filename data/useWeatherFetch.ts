@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { WeatherUnits } from './userPrefDataTypes';
+import { WeatherUnits } from './DataTypes';
 
 const BASE_URL = "/api/weather";
 

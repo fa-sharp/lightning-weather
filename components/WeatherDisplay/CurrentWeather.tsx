@@ -1,5 +1,5 @@
 import React from 'react'
-import { WeatherUnits } from '../../data/userPrefDataTypes';
+import { WeatherUnits } from '../../data/DataTypes';
 import styles from './WeatherDisplay.module.scss';
 
 interface CurrentWeatherProps {

@@ -12,7 +12,7 @@
         min-height: 220px;
     }
 
-    // Optional colors for city grid (a little fun with gradients):
+    // Optional colors for city grid (a little fun with HSL and gradients):
     &.withColor {
         --gradientAngle: 144deg;
         --gradientStart: 55%;

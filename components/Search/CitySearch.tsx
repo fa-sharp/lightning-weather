@@ -3,17 +3,23 @@ import { debounce } from 'lodash';
 import useSWR from 'swr';
 import { City } from '../../data/DataTypes'
 import styles from './CitySearch.module.scss'
+import useCitiesFetch from '../../data/useCitiesFetch';
 
 interface CitySearchProps {
     onCityLoad: (selectedCity: City | null) => void;
 }
 
-const CitySearch = ({ onCityLoad: onCitySearch }: CitySearchProps) => {
+const CitySearch = ({ onCityLoad }: CitySearchProps) => {
 
     const { data: cityDataList, error: cityDataError } = useSWR<City[]>('/api/cities', { revalidateOnFocus: false });
 
     const [currentQuery, setCurrentQuery] = useState("");
     const [validQuery, setValidQuery] = useState(false);
+    const [searching, setSearching] = useState(false);
+
+    const [foundCities, fetchingCities] = useCitiesFetch(currentQuery);
+
+    const [displayedCities, setDisplayedCities] = useState<City[]>([]);
     const [selectedCity, setSelectedCity] = useState<City | null>(null);
 
     const citySearchRef = useRef<HTMLInputElement>(null);
@@ -22,15 +28,20 @@ const CitySearch = ({ onCityLoad: onCitySearch }: CitySearchProps) => {
         setSelectedCity(null);
 
         const citySearchQuery = event.target.value;
-        setCurrentQuery(citySearchQuery);
-        setValidQuery(validateCitySearchQuery(citySearchQuery));
+        const isValid = validateCitySearchQuery(citySearchQuery);
+        
+        setValidQuery(isValid);
+        if (isValid)
+            setCurrentQuery(citySearchQuery);
+        else
+            setCurrentQuery("");
     }
 
     const debouncedOnSearchChange = useMemo(() => debounce(onSearchChange, 350), []);
 
     const onCitySelected = (city: City) => {
         setSelectedCity(city);
-        onCitySearch(city);
+        onCityLoad(city);
         if (citySearchRef.current)
             citySearchRef.current.value = city.combinedName;
     }
@@ -44,7 +55,7 @@ const CitySearch = ({ onCityLoad: onCitySearch }: CitySearchProps) => {
             <label className={styles.citySearchLabel} htmlFor={styles.citySearchInput}>Search cities: </label>
             <span className={styles.citySearchContainer}>
                 <input ref={citySearchRef} id={styles.citySearchInput} name="citySearch" placeholder="City Name"
-                    autoComplete="off" type="search" onChange={debouncedOnSearchChange} />
+                    autoComplete="off" type="search" onChange={(e) => {debouncedOnSearchChange(e); setSearching(true);}} />
                 {/* <button type="submit" onClick={() => onCitySearch(selectedCity)}>Search</button> */}
                 
                 {validQuery && !selectedCity && (

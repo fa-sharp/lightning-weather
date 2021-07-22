@@ -15,7 +15,7 @@
     // Optional colors for city grid (a little fun with gradients):
     &.withColor {
         --gradientAngle: 144deg;
-        --gradientStart: 46%;
+        --gradientStart: 55%;
         --gradientEnd: 100%;
         --cityBackground1: linear-gradient(var(--gradientAngle), hsl(190, 100%, 98%) var(--gradientStart), hsl(190, 100%, 85%) var(--gradientEnd)), #d5fffb;
         --cityBackground2: linear-gradient(var(--gradientAngle), hsl(150, 100%, 98%) var(--gradientStart), hsl(150, 100%, 85%) var(--gradientEnd)), #d5fffb;

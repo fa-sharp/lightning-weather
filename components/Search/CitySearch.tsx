@@ -5,10 +5,10 @@ import { City } from '../../data/DataTypes'
 import styles from './CitySearch.module.scss'
 
 interface CitySearchProps {
-    onCitySearch: (selectedCity: City | null) => void;
+    onCityLoad: (selectedCity: City | null) => void;
 }
 
-const CitySearch = ({ onCitySearch }: CitySearchProps) => {
+const CitySearch = ({ onCityLoad: onCitySearch }: CitySearchProps) => {
 
     const { data: cityDataList, error: cityDataError } = useSWR<City[]>('/api/cities', { revalidateOnFocus: false });
 

@@ -13,7 +13,7 @@ const Search = () => {
     const [loadedCity, setLoadedCity] = useState<City | null>(null);
     const router = useRouter();
 
-    const onCitySearch = (selectedCity: City | null) => {
+    const onCityLoad = (selectedCity: City | null) => {
         if (!selectedCity) // For now, nothing happens if user hasn't selected a city from the dropdown
             return;
         else
@@ -23,7 +23,7 @@ const Search = () => {
     return (
         <Layout>
             <main className={styles.weather}>
-                <CitySearch onCitySearch={onCitySearch}/>
+                <CitySearch onCityLoad={onCityLoad}/>
                 {loadedCity && 
                     <WeatherDisplay city={loadedCity} units={WeatherUnits.IMPERIAL}
                         addButton={true} 

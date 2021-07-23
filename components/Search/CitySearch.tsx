@@ -1,6 +1,5 @@
-import React, { ChangeEventHandler, useEffect, useMemo, useRef, useState } from 'react'
+import React, { ChangeEvent, ChangeEventHandler, useEffect, useMemo, useRef, useState } from 'react'
 import { debounce } from 'lodash';
-import useSWR from 'swr';
 import { City } from '../../data/DataTypes'
 import styles from './CitySearch.module.scss'
 import useCitiesFetch from '../../data/useCitiesFetch';
@@ -11,33 +10,32 @@ interface CitySearchProps {
 
 const CitySearch = ({ onCityLoad }: CitySearchProps) => {
 
-    const { data: cityDataList, error: cityDataError } = useSWR<City[]>('/api/cities', { revalidateOnFocus: false });
-
     const [currentQuery, setCurrentQuery] = useState("");
     const [validQuery, setValidQuery] = useState(false);
-    const [searching, setSearching] = useState(false);
+    const [waiting, setWaiting] = useState(false);
 
-    const [foundCities, fetchingCities] = useCitiesFetch(currentQuery);
+    const {foundCities, fetchingCities, error: fetchCitiesError} = useCitiesFetch(currentQuery);
 
-    const [displayedCities, setDisplayedCities] = useState<City[]>([]);
+    const [displayedCities, setDisplayedCities] = useState<City[] | null>(null);
     const [selectedCity, setSelectedCity] = useState<City | null>(null);
 
     const citySearchRef = useRef<HTMLInputElement>(null);
 
-    const onSearchChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-        setSelectedCity(null);
 
-        const citySearchQuery = event.target.value;
-        const isValid = validateCitySearchQuery(citySearchQuery);
-        
-        setValidQuery(isValid);
-        if (isValid)
-            setCurrentQuery(citySearchQuery);
-        else
-            setCurrentQuery("");
+    const immediateSearchHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setSelectedCity(null);
+        setWaiting(true);
+        setValidQuery(validateCitySearchQuery(event.target.value));
     }
 
-    const debouncedOnSearchChange = useMemo(() => debounce(onSearchChange, 350), []);
+    const onSearch: ChangeEventHandler<HTMLInputElement> = (event) => {
+        const citySearchQuery = event.target.value;
+        
+        setCurrentQuery(validateCitySearchQuery(citySearchQuery) ? citySearchQuery : "");
+        setWaiting(false);
+    }
+    
+    const debouncedSearchHandler = useMemo(() => debounce(onSearch, 350), []);
 
     const onCitySelected = (city: City) => {
         setSelectedCity(city);
@@ -47,30 +45,33 @@ const CitySearch = ({ onCityLoad }: CitySearchProps) => {
     }
 
     useEffect(() => {
-        console.log(currentQuery);
-    }, [currentQuery])
+        if (foundCities)
+            setDisplayedCities(foundCities);
+        else if (fetchCitiesError)
+            setDisplayedCities(null);
+    }, [fetchCitiesError, foundCities])
 
     return (
         <section className={styles.citySearch}>
             <label className={styles.citySearchLabel} htmlFor={styles.citySearchInput}>Search cities: </label>
             <span className={styles.citySearchContainer}>
-                <input ref={citySearchRef} id={styles.citySearchInput} name="citySearch" placeholder="City Name"
-                    autoComplete="off" type="search" onChange={(e) => {debouncedOnSearchChange(e); setSearching(true);}} />
-                {/* <button type="submit" onClick={() => onCitySearch(selectedCity)}>Search</button> */}
+                <input ref={citySearchRef} id={styles.citySearchInput}
+                    className={(waiting || fetchingCities) ? styles.loading : ""}
+                    name="citySearch" placeholder="City Name"
+                    autoComplete="off" type="search" 
+                    onChange={(e) => {immediateSearchHandler(e); debouncedSearchHandler(e);}} />
+                <i className={styles.loadingIcon}></i>
                 
-                {validQuery && !selectedCity && (
-                    cityDataError ? <div>Failed to load cities!</div>
-
-                        : !cityDataList ? <div>Loading cities...</div>
-                        
-                        : <div className={styles.citySearchItemList}>
-                            {searchCities(currentQuery, cityDataList)?.map(city =>
+                {!selectedCity && validQuery && displayedCities &&
+                    <div className={styles.citySearchItemList}>
+                        {displayedCities.length === 0 ? "City not found!"
+                            : displayedCities.map(city =>
                                 <button className={styles.citySearchItem} key={city.id}
                                     onClick={() => onCitySelected(city)}>
                                         {city.combinedName}
                                 </button>
-                            ) || "City not found!"}
-                        </div>)}
+                            )}
+                    </div>}
             </span>
         </section>
     )

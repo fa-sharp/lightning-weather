@@ -2,12 +2,9 @@ import { useState, useEffect } from "react";
 import { City } from "./DataTypes";
 
 const BASE_URL = '/api/testcities';
-const generateURL = (searchQuery: string) => `${BASE_URL}?search=${searchQuery}`;
+const generateURL = (searchQuery: string) => `${BASE_URL}?search=${encodeURIComponent(searchQuery)}`;
 
 const fetchCities = async (searchQuery: string) => {
-    
-    if (searchQuery === "")
-        return null;
 
     try {
         const response = await fetch(generateURL(searchQuery));
@@ -27,18 +24,41 @@ const fetchCities = async (searchQuery: string) => {
     }
 }
 
-/** foundCities will be null if loading, or if there's an error. It will be an empty erray if no cities are found */
-const useCitiesFetch = (searchQuery: string): [City[] | null, boolean] => {
+/**
+ *  @param searchQuery the query to search the city list. If it's an empty string, nothing will be fetched from the server
+ *  
+ *  @returns An object containing:
+ * 
+ *  foundCities - the cities that were found. It will be null if loading, if the searchQuery is empty, if there's an error. It will be an empty array if no cities are found.
+ *  
+ *  fetchingCities - whether it's waiting for a response from the server
+ *  
+ *  error - whether there was an error from the server
+ */
+const useCitiesFetch = (searchQuery: string) => {
     
     const [foundCities, setFoundCities] = useState<City[] | null>(null);
     const [fetchingCities, setFetchingCities] = useState(true);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
-        fetchCities(searchQuery).then(foundCities => setFoundCities(foundCities));
-        setFetchingCities(false);
+        if (searchQuery === "") {
+            setFetchingCities(false);
+            return;
+        }
+        
+        setFetchingCities(true);
+        fetchCities(searchQuery).then(foundCities => {
+            if (foundCities)
+                setFoundCities(foundCities)
+            else
+                setError(true);
+
+            setFetchingCities(false);
+        });
     }, [searchQuery]);
 
-    return [foundCities, fetchingCities];
+    return {foundCities, fetchingCities, error};
 }
 
 export default useCitiesFetch;

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ChangeEventHandler, useEffect, useMemo, useRef, useState } from 'react'
+import React, { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { debounce } from 'lodash';
 import { City } from '../../data/DataTypes'
 import styles from './CitySearch.module.scss'
@@ -15,7 +15,7 @@ const CitySearch = ({ onCityLoad }: CitySearchProps) => {
     /** The fetching function. If the currentQuery is an empty string, nothing will be fetched. */
     const { foundCities, fetchingCities, error: fetchCitiesError } = useCitiesFetch(currentQuery);
 
-    /** Whether the user input is valid */
+    /** Whether the current user input is valid */
     const [validQuery, setValidQuery] = useState(false);
     /** Whether the input is currently waiting (debouncing) before sending the query to the server */
     const [waiting, setWaiting] = useState(false);
@@ -28,7 +28,7 @@ const CitySearch = ({ onCityLoad }: CitySearchProps) => {
     /** The city search input element */
     const citySearchRef = useRef<HTMLInputElement>(null);
 
-    /** Run immediately every time the user changes the input. */
+    /** Runs immediately every time the user changes the input. */
     const immediateSearchHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setSelectedCity(null);
         setWaiting(true);

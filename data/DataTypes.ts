@@ -4,6 +4,7 @@ export type City = {
     state: string;
     country: string;
     combinedName: string;
+    coord: { lat: number, lon: number };
 }
 
 export enum WeatherUnits {

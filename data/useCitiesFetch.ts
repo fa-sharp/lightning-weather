@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { City } from "./DataTypes";
 
-const BASE_URL = '/api/testcities';
+const BASE_URL = '/api/cities';
 const generateURL = (searchQuery: string) => `${BASE_URL}?search=${encodeURIComponent(searchQuery)}`;
 
 const fetchCities = async (searchQuery: string) => {

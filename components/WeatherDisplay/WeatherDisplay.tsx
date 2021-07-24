@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { City, WeatherUnits } from '../../data/DataTypes'
 import useWeatherFetch from '../../data/useWeatherFetch'
 import CurrentWeather from './CurrentWeather'
+import Forecast from './Forecast'
 import styles from './WeatherDisplay.module.scss'
 
 interface WeatherDisplayProps {
@@ -20,10 +21,12 @@ const WeatherDisplay = ({ city, units=WeatherUnits.IMPERIAL, withColor=false, ad
 
     const [data, error] = useWeatherFetch(city.id, units);
     
+    const [showForecast, setShowForecast] = useState(false);
+
     const cityTitle = `${city.name}${(city.state !== "") ? (', ' + city.state) : ""}`;
 
     return (
-        <section className={`${styles.weatherDisplay} ${withColor ? styles.withColor : ""}`}
+        <section className={`${styles.weatherDisplay} ${withColor ? styles.withColor : ""} ${showForecast ? styles.expanded : ""}`}
             aria-label={"Weather in " + cityTitle}>
             
             <h2>{cityTitle}</h2>
@@ -32,6 +35,8 @@ const WeatherDisplay = ({ city, units=WeatherUnits.IMPERIAL, withColor=false, ad
                 : !data ? "Loading data..."
                 : (<CurrentWeather data={data} units={units} />)
             }
+
+            {showForecast && data && <Forecast city={city} units={units} />}
 
             {addButton && 
                 <button className={styles.addButton}

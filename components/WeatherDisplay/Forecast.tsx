@@ -1,13 +1,17 @@
 import React from 'react'
 import { City, WeatherUnits } from '../../data/DataTypes'
+import useForecastFetch from '../../data/useForecastFetch'
 import styles from './WeatherDisplay.module.scss'
 
 interface ForecastProps {
-    city: City
+    data: any
     units: WeatherUnits
 }
 
-const Forecast = ({city, units}: ForecastProps) => {
+const Forecast = ({data, units}: ForecastProps) => {
+
+
+
     return (
         <section className={styles.forecast} aria-label="Forecast">
             <div className={styles.day}>Mon</div>

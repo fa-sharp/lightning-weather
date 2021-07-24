@@ -1,3 +1,8 @@
+:root {
+  --blue-light: hsl(190, 100%, 72%);
+  --blue-medium: hsl(190, 100%, 50%);
+}
+
 *, *::after, *::before {
   box-sizing: border-box;
   font-size: 100%;

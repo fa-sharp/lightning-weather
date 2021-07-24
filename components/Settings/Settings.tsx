@@ -1,3 +1,4 @@
+import { FormControlLabel, FormGroup, Grid, makeStyles, Switch, Typography } from '@material-ui/core';
 import React from 'react'
 import { ChangeUserOption, UserOptions, WeatherUnits } from '../../data/DataTypes'
 import styles from './Settings.module.scss';
@@ -6,6 +7,21 @@ interface Props {
     options: UserOptions
     changeOption: ChangeUserOption
 }
+
+const useStyles = makeStyles({
+    switchBase: {
+        color: "var(--blue-medium)",
+        '&$checked': {
+            color: "var(--blue-medium)",
+        },
+        '&$checked + $track': {
+            backgroundColor: "var(--blue-medium)",
+        }
+    },
+    checked: {},
+    track: {backgroundColor: "var(--blue-light)"}
+});
+
 
 const Settings = ({options, changeOption}: Props) => {
 
@@ -16,15 +32,32 @@ const Settings = ({options, changeOption}: Props) => {
     const currentColor = options.withColor;
     const changeColor = (withColor: boolean) => changeOption("withColor", withColor);
 
+    const muiClasses = useStyles();
+
     return (
         <div>
-            <label htmlFor={styles.units}>Units: </label>
-            <input type="checkbox" name="Units" id={styles.units}
-                checked={currentUnits} onChange={(e) => changeUnits(e.target.checked)} />
-            
-            <label htmlFor={styles.withColors}>Colors: </label>
-            <input type="checkbox" name="Colors" id={styles.withColors}
-                checked={currentColor} onChange={(e) => changeColor(e.target.checked)} />
+            <FormGroup style={{alignItems: "flex-start"}}>
+                <Typography component="div">
+                    <Grid component="label" container alignItems="center" spacing={0}>
+                        <Grid item><b>Units: </b>Metric</Grid>
+                        <Grid item>
+                            <Switch checked={currentUnits} name="unitsOption" size="small"
+                                onChange={(e) => changeUnits(e.target.checked)}
+                                classes={{switchBase: muiClasses.switchBase, checked: muiClasses.checked, track: muiClasses.track}} ></Switch>
+                        </Grid>
+                        <Grid item>Imperial</Grid>
+                    </Grid>
+                </Typography>
+                <Typography component="div">
+                    <Grid component="label" container alignItems="center" spacing={0}>
+                        <Grid item><b>Colors: </b>Less</Grid>
+                        <Grid item>
+                        <Switch checked={currentColor} name="colorOption" size="small"
+                            onChange={(e) => changeColor(e.target.checked)} /></Grid>
+                        <Grid item>More</Grid>
+                    </Grid>
+                </Typography>
+            </FormGroup>
         </div>
     )
 }

@@ -3,13 +3,13 @@ import React, { useState } from 'react'
 import Layout from '../components/Layout/Layout'
 import CitySearch from '../components/Search/CitySearch'
 import WeatherDisplay from '../components/WeatherDisplay/WeatherDisplay';
-import { City, WeatherUnits } from '../data/DataTypes';
+import { City } from '../data/DataTypes';
 import useLocalStorage from '../data/useLocalStorage';
 import styles from '../styles/Search.module.scss'
 
 const Search = () => {
 
-    const { addCity } = useLocalStorage();
+    const { options, addCity } = useLocalStorage();
     const [loadedCity, setLoadedCity] = useState<City | null>(null);
     const router = useRouter();
 
@@ -24,8 +24,8 @@ const Search = () => {
         <Layout>
             <main className={styles.weather}>
                 <CitySearch onCityLoad={onCityLoad}/>
-                {loadedCity && 
-                    <WeatherDisplay city={loadedCity} units={WeatherUnits.IMPERIAL}
+                {loadedCity && options && 
+                    <WeatherDisplay city={loadedCity} units={options.units} withColor={options.withColor}
                         addButton={true} 
                         addCity={(city) => {
                             addCity(city);

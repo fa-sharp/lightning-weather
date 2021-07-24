@@ -18,7 +18,7 @@ const fetchCities = async (searchQuery: string) => {
         }
     }
     catch (err) {
-        console.error("Error fetching cities!");
+        console.error("Network/fetch error!");
         console.log(err);
         return null;
     }
@@ -27,13 +27,12 @@ const fetchCities = async (searchQuery: string) => {
 /**
  *  @param searchQuery the query to search the city list. If it's an empty string, nothing will be fetched from the server
  *  
- *  @returns An object containing:
- * 
- *  foundCities - the cities that were found. It will be null if loading, if the searchQuery is empty, if there's an error. It will be an empty array if no cities are found.
+ *  @returns 
+ *  foundCities: the cities that were found. It will be null if loading, if the searchQuery is empty, or if there's an error. It will be an empty array if no cities are found.
  *  
- *  fetchingCities - whether it's waiting for a response from the server
+ *  fetchingCities: whether it's waiting for a response from the server
  *  
- *  error - whether there was an error from the server
+ *  error: whether there was an error from the server
  */
 const useCitiesFetch = (searchQuery: string) => {
     

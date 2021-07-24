@@ -10,31 +10,39 @@ interface CitySearchProps {
 
 const CitySearch = ({ onCityLoad }: CitySearchProps) => {
 
+    /** Query that's sent to the server */
     const [currentQuery, setCurrentQuery] = useState("");
+    /** The fetching function. If the currentQuery is an empty string, nothing will be fetched. */
+    const { foundCities, fetchingCities, error: fetchCitiesError } = useCitiesFetch(currentQuery);
+
+    /** Whether the user input is valid */
     const [validQuery, setValidQuery] = useState(false);
+    /** Whether the input is currently waiting (debouncing) before sending the query to the server */
     const [waiting, setWaiting] = useState(false);
 
-    const {foundCities, fetchingCities, error: fetchCitiesError} = useCitiesFetch(currentQuery);
-
+    /** The city results list that is displayed to the user */
     const [displayedCities, setDisplayedCities] = useState<City[] | null>(null);
+    /** The currently selected city */
     const [selectedCity, setSelectedCity] = useState<City | null>(null);
 
+    /** The city search input element */
     const citySearchRef = useRef<HTMLInputElement>(null);
 
-
+    /** Run immediately every time the user changes the input. */
     const immediateSearchHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setSelectedCity(null);
         setWaiting(true);
         setValidQuery(validateCitySearchQuery(event.target.value));
     }
 
-    const onSearch: ChangeEventHandler<HTMLInputElement> = (event) => {
+    /** If the user's input is valid, this will update currentQuery so that it's sent to the server. Otherwise, this sets currentQuery to an empty string so nothing is sent to the server. */
+    const onSearch = (event: ChangeEvent<HTMLInputElement>) => {
         const citySearchQuery = event.target.value;
-        
         setCurrentQuery(validateCitySearchQuery(citySearchQuery) ? citySearchQuery : "");
         setWaiting(false);
     }
-    
+
+    /** The debounced version of onSearch. Will run only every 350ms, in order to limit calls to the server */
     const debouncedSearchHandler = useMemo(() => debounce(onSearch, 350), []);
 
     const onCitySelected = (city: City) => {
@@ -59,7 +67,7 @@ const CitySearch = ({ onCityLoad }: CitySearchProps) => {
                     className={(waiting || fetchingCities) ? styles.loading : ""}
                     name="citySearch" placeholder="City Name"
                     autoComplete="off" type="search" 
-                    onChange={(e) => {immediateSearchHandler(e); debouncedSearchHandler(e);}} />
+                    onChange={e => {immediateSearchHandler(e); debouncedSearchHandler(e);}} />
                 <i className={styles.loadingIcon}></i>
                 
                 {!selectedCity && validQuery && displayedCities &&
@@ -77,16 +85,6 @@ const CitySearch = ({ onCityLoad }: CitySearchProps) => {
     )
 }
 
-const citySearchRegex = new RegExp(/^[a-zA-Z ,]+$/); // for now, only a-z characters but will need to expand to include accents, etc.
 const validateCitySearchQuery = (searchQuery: string) => searchQuery.length > 1;
-
-const searchCities = (citySearchQuery: string, cityDataList: City[]) => {
-    const foundCities = cityDataList
-        .filter(cityData => normalizeString(cityData.combinedName).startsWith(normalizeString(citySearchQuery)))
-        .slice(0,9);
-    return foundCities.length !== 0 ? foundCities : null;
-}
-
-const normalizeString = (str: string) => str.toLowerCase();
 
 export default CitySearch

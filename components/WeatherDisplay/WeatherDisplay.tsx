@@ -20,21 +20,21 @@ interface WeatherDisplayProps {
 
 const WeatherDisplay = ({ city, units=WeatherUnits.IMPERIAL, withColor=false, addButton=false, removeButton=false, addCity, removeCity }: WeatherDisplayProps) => {
 
-    const [showForecast, setShowForecast] = useState(false);
+    const [expanded, setExpanded] = useState(false);
     const [shouldFetchForecast, setShouldFetchForecast] = useState(false); // forecast data won't be fetched by default, until expanded
 
     const [weatherData, weatherFetchError] = useWeatherFetch(city.id, units);
     const [forecastData, forecastFetchError] = useForecastFetch(city.coord.lat, city.coord.lon, units, shouldFetchForecast);
     
     const onExpand = () => {
-        setShowForecast(prev => !prev);
+        setExpanded(prev => !prev);
         setShouldFetchForecast(true); // When user opens the expanded view for the first time, fetch the forecast data.
     }
 
     const cityTitle = `${city.name}${(city.state !== "") ? (', ' + city.state) : ""}`;
 
     return (
-        <section className={`${styles.weatherDisplay} ${withColor ? styles.withColor : ""} ${showForecast ? styles.expanded : ""}`}
+        <section className={`${styles.weatherDisplay} ${withColor ? styles.withColor : ""} ${expanded ? styles.expanded : ""}`}
             aria-label={"Weather in " + cityTitle}>
             
             <h2>{cityTitle}</h2>
@@ -44,13 +44,13 @@ const WeatherDisplay = ({ city, units=WeatherUnits.IMPERIAL, withColor=false, ad
                 : (<CurrentWeather data={weatherData} units={units} />)
             }
 
-            <button className={styles.expandButton}
-                onClick={onExpand}>Expand</button>
-
-            {showForecast &&
+            {expanded &&
                 (forecastFetchError ? "Failed to fetch forecast"
                     : !forecastData ? "Loading forecast..."
                     : <Forecast data={forecastData} units={units} />)}
+
+            <button className={styles.expandButton}
+                onClick={onExpand}>Expand</button>
 
             {addButton && 
                 <button className={styles.addButton}

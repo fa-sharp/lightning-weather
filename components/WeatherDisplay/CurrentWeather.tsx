@@ -18,19 +18,21 @@ const CurrentWeather = ({data, units}: CurrentWeatherProps) => {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={`/icons/${weather[0].icon}.png`} alt="weather condition icon"></img>
                 </div>
-                <h3>{`${Math.round(temp)}${(units === WeatherUnits.IMPERIAL) ? "° F" : "° C"}`}</h3>
+                <h3>{`${Math.round(temp)}${tempUnitsToString(units)}`}</h3>
                 <h3>{`${weather[0].main}`}</h3>
                 {`${weather[0].description}`}
             </div>
             <aside className={styles.weatherDetails}>
                 {`${getLocalTime(timezone)}`}<br/><br/>
-                {`Feels like: ${Math.round(feels_like)}${(units === WeatherUnits.IMPERIAL) ? "° F" : "° C"}`}<br/>
+                {`Feels like: ${Math.round(feels_like)}${tempUnitsToString(units)}`}<br/>
                 {`Humidity: ${humidity}%`}<br/>
                 {`Clouds: ${clouds.all}%`}
             </aside>
         </div>
     )
 }
+
+const tempUnitsToString = (units: WeatherUnits) => units === WeatherUnits.IMPERIAL ? "° F" : "° C";
 
 const getLocalTime = (timeOffset: number) => {
     const localTime = new Date(Date.now() + (timeOffset*1000));

@@ -28,6 +28,7 @@
     // Expanded display (to show forecast)
     &.expanded {
         flex: 1;
+        min-width: 300px;
         min-height: 300px;
     }
 
@@ -66,9 +67,21 @@
     flex: 1;
 
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     
     width: 100%;
+
+    font-size: 0.8rem;
+
+    h3 {
+        font-size: 1rem;
+    }
+}
+
+.forecastIcon {
+    & > img {
+        max-width: 50px;
+    }
 }
 
 // BUTTONS

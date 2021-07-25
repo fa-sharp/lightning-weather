@@ -62,8 +62,11 @@ const WeatherDisplay = ({ city, units=WeatherUnits.IMPERIAL, withColor=false, ad
                     : !forecastData ? "Loading forecast..."
                     : <Forecast data={forecastData} units={units} />)}
 
-            <button className={styles.expandButton}
-                onClick={onExpand}>Expand</button>
+            <button className={styles.expandButton} aria-label="Display/hide Forecast" title={showForecast ? "Hide Forecast" : "Show Forecast"}
+                onClick={onExpand}>
+                {showForecast ? <span className="material-icons">expand_less</span>
+                    : <span className="material-icons">expand_more</span>}
+            </button>
 
             {addButton && 
                 <button className={styles.addButton}
@@ -74,7 +77,7 @@ const WeatherDisplay = ({ city, units=WeatherUnits.IMPERIAL, withColor=false, ad
             {removeButton &&
                 <button className={styles.removeButton} title="Remove" aria-label="Remove city"
                     onClick={() => removeCity ? removeCity(city) : null} >
-                    X
+                    <span className="material-icons">clear</span>
                 </button>}
         </section>
     )

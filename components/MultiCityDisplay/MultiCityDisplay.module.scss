@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-
+    max-width: 1000px;
 
     & > * {
         margin: 1.5rem;
@@ -19,10 +19,10 @@
         --gradientAngle: 144deg;
         --gradientStart: 55%;
         --gradientEnd: 100%;
-        --cityBackground1: linear-gradient(var(--gradientAngle), hsl(190, 100%, 98%) var(--gradientStart), hsl(190, 100%, 85%) var(--gradientEnd));
-        --cityBackground2: linear-gradient(var(--gradientAngle), hsl(150, 100%, 98%) var(--gradientStart), hsl(150, 100%, 85%) var(--gradientEnd));
-        --cityBackground3: linear-gradient(var(--gradientAngle), hsl(260, 100%, 98%) var(--gradientStart), hsl(260, 100%, 85%) var(--gradientEnd));
-        --cityBackground4: linear-gradient(var(--gradientAngle), hsl(330, 100%, 98%) var(--gradientStart), hsl(330, 100%, 85%) var(--gradientEnd));
+        --cityBackground1: linear-gradient(var(--gradientAngle), hsl(190, 100%, 99%) var(--gradientStart), hsl(190, 100%, 90%) var(--gradientEnd));
+        --cityBackground2: linear-gradient(var(--gradientAngle), hsl(150, 100%, 99%) var(--gradientStart), hsl(150, 100%, 90%) var(--gradientEnd));
+        --cityBackground3: linear-gradient(var(--gradientAngle), hsl(260, 100%, 99%) var(--gradientStart), hsl(260, 100%, 90%) var(--gradientEnd));
+        --cityBackground4: linear-gradient(var(--gradientAngle), hsl(330, 100%, 99%) var(--gradientStart), hsl(330, 100%, 90%) var(--gradientEnd));
     
         & > :nth-child(1) {background: var(--cityBackground1)}
         & > :nth-child(2) {background: var(--cityBackground2)}

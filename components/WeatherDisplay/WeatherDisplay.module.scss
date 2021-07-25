@@ -27,9 +27,11 @@
 
     // Expanded display (to show forecast)
     &.expanded {
-        flex: 1;
-        min-width: 300px;
-        min-height: 300px;
+        min-width: 22.5rem;
+        min-height: 17.5rem;
+
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
     }
 
     // Optional color
@@ -65,8 +67,9 @@
 .forecast {
     display: flex;
     flex: 1;
+    flex-wrap: wrap;
 
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     
     width: 100%;
@@ -75,6 +78,10 @@
 
     h3 {
         font-size: 1rem;
+    }
+
+    .day {
+        width: 33.33%;
     }
 }
 

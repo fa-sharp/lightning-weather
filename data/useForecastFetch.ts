@@ -18,7 +18,7 @@ const fetcher = (url: string) => fetch(url).then(res => {
 const useForecastFetch = (lat: number, lon: number, units: WeatherUnits, shouldFetch: boolean) => {
     
     const url = `${BASE_URL}?lat=${lat}&lon=${lon}&units=${units}`;
-    const { data, error } = useSWR(shouldFetch ? url : null, fetcher, {revalidateOnFocus: false, shouldRetryOnError: false}); // limited free API requests, so disabling revalidation
+    const { data, error } = useSWR(shouldFetch ? url : null, fetcher, { revalidateOnFocus: false, shouldRetryOnError: false });
 
     return [data, error];
 }

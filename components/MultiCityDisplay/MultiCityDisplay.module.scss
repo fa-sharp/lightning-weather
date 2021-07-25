@@ -3,13 +3,15 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    max-width: 800px;
 
 
     & > * {
         margin: 1.5rem;
-        min-width: 280px;
-        min-height: 220px;
+
+        min-width: 18.75rem;
+        max-width: 22.5rem;
+
+        min-height: 13.75rem;
     }
 
     // Optional colors for city grid (a little fun with HSL and gradients):

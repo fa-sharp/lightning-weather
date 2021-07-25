@@ -20,7 +20,7 @@ const Forecast = ({data, units}: ForecastProps) => {
                     return null;
 
                 const { dt, temp: { min, max }, weather } = day;
-                const { description, icon } = weather[0];
+                const { main, description, icon } = weather[0];
 
                 return (
                     <article className={styles.day} key={numDay}>
@@ -29,15 +29,15 @@ const Forecast = ({data, units}: ForecastProps) => {
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img src={`/icons/${icon}.png`} alt="weather condition icon" />
                         </div>
-                        {description} <br/>
-                        {`${Math.round(max)} / ${Math.round(min)}${tempUnitsToString(units)}`}
+                        {`${Math.round(max)} / ${Math.round(min)}${tempUnitsToString(units)}`}<br/>
+                        {description} 
                     </article>);
             })}
         </section>
     )
 }
 
-const NUM_FORECAST_DAYS = 4;
+const NUM_FORECAST_DAYS = 6;
 
 const tempUnitsToString = (units: WeatherUnits) => units === WeatherUnits.IMPERIAL ? "° F" : "° C";
 

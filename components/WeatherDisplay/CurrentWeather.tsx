@@ -5,26 +5,35 @@ import styles from './WeatherDisplay.module.scss';
 interface CurrentWeatherProps {
     data: any
     units: WeatherUnits
+    fetchError?: boolean
 }
 
-const CurrentWeather = ({data, units}: CurrentWeatherProps) => {
+const currentWeatherClass = styles.currentWeather;
+
+const CurrentWeather = ({data, units, fetchError}: CurrentWeatherProps) => {
+
+    if (fetchError)
+        return <div className={currentWeatherClass}>Failed to fetch weather 😭</div>
+    else if (!data)
+        return <div className={currentWeatherClass}>Loading current weather...</div>
 
     const {main: {temp, feels_like, humidity}, weather, clouds, timezone} = data;
+    const tempUnits = tempUnitsToString(units);
 
     return (
-        <div className={styles.currentWeather}>
+        <div className={currentWeatherClass}>
             <div>
                 <div className={styles.weatherIcon}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={`/icons/${weather[0].icon}.png`} alt="weather condition icon"></img>
                 </div>
-                <h3>{`${Math.round(temp)}${tempUnitsToString(units)}`}</h3>
+                <h3>{`${Math.round(temp)}${tempUnits}`}</h3>
                 <h3>{`${weather[0].main}`}</h3>
                 {`${weather[0].description}`}
             </div>
             <aside className={styles.weatherDetails}>
                 {`${getLocalTime(timezone)}`}<br/><br/>
-                {`Feels like: ${Math.round(feels_like)}${tempUnitsToString(units)}`}<br/>
+                {`Feels like: ${Math.round(feels_like)}${tempUnits}`}<br/>
                 {`Humidity: ${humidity}%`}<br/>
                 {`Clouds: ${clouds.all}%`}
             </aside>

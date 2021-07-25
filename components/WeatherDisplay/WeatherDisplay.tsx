@@ -52,33 +52,35 @@ const WeatherDisplay = ({ city, units=WeatherUnits.IMPERIAL, withColor=false, ad
             <h2>{cityTitle}</h2>
             
             {!showForecast && 
-                (weatherFetchError ? "Failed to fetch weather"
-                : !weatherData ? "Loading data..."
-                : <CurrentWeather data={weatherData} units={units} />)
+                <CurrentWeather data={weatherData} units={units} fetchError={weatherFetchError} />
             }
 
             {showForecast && !isGrowing &&
-                (forecastFetchError ? "Failed to fetch forecast"
-                    : !forecastData ? "Loading forecast..."
-                    : <Forecast data={forecastData} units={units} />)}
+                <Forecast data={forecastData} units={units} fetchError={forecastFetchError} />}
 
-            <button className={styles.expandButton} aria-label="Display/hide Forecast" title={showForecast ? "Hide Forecast" : "Show Forecast"}
-                onClick={onExpand}>
-                {showForecast ? <span className="material-icons">expand_less</span>
-                    : <span className="material-icons">expand_more</span>}
-            </button>
+            <div className={styles.controls}>
+                <button className={styles.editButton}><span className="material-icons">edit</span></button>
+                <button className={styles.expandButton} aria-label="Display/hide Forecast" title={showForecast ? "Hide Forecast" : "Show Forecast"}
+                    onClick={onExpand}>
+                    {showForecast ? <span className="material-icons">expand_less</span>
+                        : <span className="material-icons">expand_more</span>}
+                </button>
+                {addButton && 
+                    <button className={styles.addButton} title="Add to home" aria-label="Add to home"
+                        onClick={() => addCity ? addCity(city) : null} >
+                            <span className="material-icons gray-hover">add_circle</span>
+                    </button>}
+                {removeButton &&
+                    <button className={styles.removeButton} title="Remove" aria-label="Remove city"
+                        onClick={() => removeCity ? removeCity(city) : null} >
+                        <span className="material-icons">clear</span>
+                    </button>}
+            </div>
 
-            {addButton && 
-                <button className={styles.addButton}
-                    onClick={() => addCity ? addCity(city) : null} >
-                        + Add to Home
-                </button>}
             
-            {removeButton &&
-                <button className={styles.removeButton} title="Remove" aria-label="Remove city"
-                    onClick={() => removeCity ? removeCity(city) : null} >
-                    <span className="material-icons">clear</span>
-                </button>}
+
+            
+            
         </section>
     )
 }

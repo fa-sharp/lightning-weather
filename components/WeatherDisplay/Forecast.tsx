@@ -1,15 +1,22 @@
 import React from 'react'
-import { City, WeatherUnits } from '../../data/DataTypes'
+import { WeatherUnits } from '../../data/DataTypes'
 import Image from 'next/image'
-import useForecastFetch from '../../data/useForecastFetch'
 import styles from './WeatherDisplay.module.scss'
 
 interface ForecastProps {
-    data: ForecastData
+    data: APIForecastData
     units: WeatherUnits
+    fetchError?: boolean
 }
 
-const Forecast = ({data, units}: ForecastProps) => {
+const forecastClass = styles.forecast;
+
+const Forecast = ({data, units, fetchError}: ForecastProps) => {
+
+    if (fetchError)
+        return <div className={forecastClass}>Failed to fetch forecast 😭</div>
+    else if (!data)
+        return <div className={forecastClass}>Loading forecast...</div>
 
     const { daily, timezone_offset } = data;
 
@@ -47,18 +54,18 @@ const getLocalDay = (time: number, timeOffset: number) => {
     return formattedDay;
 }
 
-type ForecastData = {
+type APIForecastData = {
     timezone_offset: number
-    daily: ForecastDay[]
+    daily: APIForecastDay[]
 }
 
-type ForecastDay = {
+type APIForecastDay = {
     dt: number
     temp: { min: number, max: number };
-    weather: WeatherCondition[]
+    weather: APIWeatherCondition[]
 }
 
-type WeatherCondition = {
+type APIWeatherCondition = {
     main: string
     description: string
     icon: string

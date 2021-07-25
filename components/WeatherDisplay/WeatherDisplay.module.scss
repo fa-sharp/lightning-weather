@@ -1,8 +1,6 @@
+// WeatherDisplay component
 .weatherDisplay {
     position: relative;
-
-    min-width: 16rem;
-    min-height: 15rem;
 
     display: flex;
     flex-direction: column;
@@ -50,6 +48,8 @@
 
 // Current Weather
 .currentWeather {
+    flex: 1 0 auto;
+
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -57,18 +57,21 @@
     width: 100%;
 
     line-height: 1.5rem;
-}
 
-.weatherIcon {
-    & > img {
-        max-width: 80px;
+    .weatherIcon {
+        & > img {
+            max-width: 80px;
+        }
     }
 }
 
 // Forecast
 .forecast {
+    --day-border-hover-color: #dadada;
+
+    flex: 1 0 auto;
+
     display: flex;
-    flex: 1;
     flex-wrap: wrap;
 
     align-items: flex-start;
@@ -83,66 +86,53 @@
     }
 
     .day {
-        width: 33.33%;
+        width: 32%;
+        border: solid 1px var(--day-border-hover-color);
+        border-radius: 5px;
+
+        &:hover {
+            background-color: var(--day-border-hover-color);
+        }
+
+        .forecastIcon {
+            & > img {
+                max-width: 50px;
+            }
+        }
     }
 }
 
-.forecastIcon {
-    & > img {
-        max-width: 50px;
+// Controls
+.controls {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    button {
+        all: unset;
+        line-height: 0;
+
+        cursor: pointer;
+
+        border: solid 1px transparent;
+        border-radius: 50%;
+
+        &:hover, &:active, &:focus {
+            border-color: black;
+        }
+    }
+
+    .addButton {
+        border: none;
+    }
+
+    // for now, does nothing
+    .editButton {
+        all: unset;
+        line-height: 0;
+
+        visibility: hidden;
     }
 }
 
-// BUTTONS
-.expandButton {
-    all: unset;
-    line-height: 0;
 
-    position: absolute;
-    bottom: 0;
-    right: 50%;
-    margin-right: -13px;
-
-    border: solid 1px transparent;
-    border-radius: 50%;
-
-    cursor: pointer;
-
-    &:hover, &:active, &:focus {
-        border-color: black;
-    }
-}
-
-.addButton {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-
-    cursor: pointer;
-
-    border: solid 1px transparent;
-    border-radius: 10px;
-
-    &:hover {
-        border: solid 1px black; 
-    }
-}
-
-.removeButton {
-    all: unset;
-    line-height: 0;
-
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    
-
-    cursor: pointer;
-
-    border: solid 1px transparent;
-    border-radius: 50%;
-
-    &:hover, &:active, &:focus {
-        border: solid 1px black; 
-    }
-}

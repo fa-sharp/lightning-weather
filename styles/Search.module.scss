@@ -1,3 +1,5 @@
+@use '../components/WeatherDisplay/WeatherDisplay.module.scss';
+
 .weather {
     flex: 1 0 auto;
 
@@ -12,9 +14,7 @@
         flex: 1 0 40%;
     }
 
-    & > :nth-child(2) {
-        flex: 1 0 40%;
-        max-height: 300px;
+    & > :last-child {
         margin-bottom: 2rem;
     }
 }

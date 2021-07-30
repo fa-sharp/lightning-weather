@@ -1,27 +1,31 @@
 import React from 'react'
 import { WeatherUnits } from '../../data/DataTypes';
+import { LoadingSpinner } from '../Misc/LoadingSpinner';
 import styles from './WeatherDisplay.module.scss';
 
 interface CurrentWeatherProps {
     data: any
     units: WeatherUnits
     fetchError?: boolean
+    fadingOut?: boolean
 }
 
 const currentWeatherClass = styles.currentWeather;
 
-const CurrentWeather = ({data, units, fetchError}: CurrentWeatherProps) => {
+const CurrentWeather = ({data, units, fetchError, fadingOut}: CurrentWeatherProps) => {
 
     if (fetchError)
         return <div className={currentWeatherClass}>Failed to fetch weather 😭</div>
     else if (!data)
-        return <div className={currentWeatherClass}>Loading current weather...</div>
+        return <div className={currentWeatherClass}>
+            <div>Loading current weather... <LoadingSpinner /></div>
+        </div>
 
     const {main: {temp, feels_like, humidity}, wind: { speed }, weather, clouds, timezone} = data;
     const tempUnits = tempUnitsToString(units);
 
     return (
-        <div className={currentWeatherClass}>
+        <div className={`${currentWeatherClass} ${fadingOut ? styles.fadingOut : ""}`}>
             <div>
                 <div className={styles.weatherIcon}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}

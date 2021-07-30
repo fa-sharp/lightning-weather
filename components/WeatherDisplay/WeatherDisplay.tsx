@@ -38,7 +38,7 @@ const WeatherDisplay = ({ city, units=WeatherUnits.IMPERIAL, withColor=false, ad
             setTimeout(() => {
                 setIsGrowing(false);
                 setShowForecast(true);
-            }, 550);
+            }, 600);
         } else
             setShowForecast(false);
     }
@@ -53,7 +53,7 @@ const WeatherDisplay = ({ city, units=WeatherUnits.IMPERIAL, withColor=false, ad
 
             {/* Default view: show current weather */}
             {!showForecast && 
-                <CurrentWeather data={weatherData} units={units} fetchError={weatherFetchError} />
+                <CurrentWeather data={weatherData} units={units} fetchError={weatherFetchError} fadingOut={isGrowing} />
             }
 
             {/* Expanded view: show forecast */}

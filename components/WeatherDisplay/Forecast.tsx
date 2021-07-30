@@ -2,6 +2,7 @@ import React from 'react'
 import { WeatherUnits } from '../../data/DataTypes'
 import Image from 'next/image'
 import styles from './WeatherDisplay.module.scss'
+import { LoadingSpinner } from '../Misc/LoadingSpinner';
 
 interface ForecastProps {
     data: APIForecastData
@@ -16,7 +17,9 @@ const Forecast = ({data, units, fetchError}: ForecastProps) => {
     if (fetchError)
         return <div className={forecastClass}>Failed to fetch forecast 😭</div>
     else if (!data)
-        return <div className={forecastClass}>Loading forecast...</div>
+        return <div className={forecastClass}>
+            <div>Loading forecast... <LoadingSpinner /></div>
+        </div>
 
     const { daily, timezone_offset } = data;
 

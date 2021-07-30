@@ -3,6 +3,7 @@ import { debounce } from 'lodash';
 import { City } from '../../data/DataTypes'
 import styles from './CitySearch.module.scss'
 import useCitiesFetch from '../../data/useCitiesFetch';
+import { LoadingSpinner } from '../Misc/LoadingSpinner';
 
 interface CitySearchProps {
     onCityLoad: (selectedCity: City | null) => void;
@@ -63,12 +64,16 @@ const CitySearch = ({ onCityLoad }: CitySearchProps) => {
         <section className={styles.citySearch}>
             <label className={styles.citySearchLabel} htmlFor={styles.citySearchInput}>Search cities: </label>
             <span className={styles.citySearchContainer}>
+
                 <input ref={citySearchRef} id={styles.citySearchInput}
-                    className={(waiting || fetchingCities) ? styles.loading : ""}
                     name="citySearch" placeholder="City Name" autoFocus
                     autoComplete="off" type="search" 
                     onChange={e => {immediateSearchHandler(e); debouncedSearchHandler(e);}} />
-                <i className={styles.loadingIcon}></i>
+                
+                {(waiting || fetchingCities) && 
+                    <div className={styles.loadingIcon}>
+                        <LoadingSpinner />
+                    </div>}
                 
                 {!selectedCity && validQuery && displayedCities &&
                     <div className={styles.citySearchItemList}>

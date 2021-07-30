@@ -15,23 +15,10 @@
     padding: 2px 7px;
     width: 100%;
 
-    &.loading {
-        & + .loadingIcon {
-            display: inline-block;
-        }
-    }
-
     & + .loadingIcon {
-        display: none;
         position: absolute;
-        top: 12px;
+        top: 5px;
         right: 30px;
-
-        height: 6px;
-        width: 6px;
-        border-radius: 50%;
-
-        background: red;
     }
 }
 

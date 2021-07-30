@@ -1,5 +1,7 @@
 // WeatherDisplay component
 .weatherDisplay {
+    --transition-time: 0.7s;
+
     position: relative;
 
     display: flex;
@@ -12,7 +14,7 @@
 
     text-align: center;
 
-    transition: all .7s ease;
+    transition: all var(--transition-time) ease;
 
     h2 {
         font-size: 1.2rem;
@@ -52,13 +54,18 @@
     justify-content: space-around;
 
     width: 100%;
-
     line-height: 1.5rem;
 
     .weatherIcon {
         & > img {
             max-width: 80px;
         }
+    }
+
+    transition: opacity .4s linear;
+
+    &.fadingOut {
+        opacity: 0;
     }
 }
 

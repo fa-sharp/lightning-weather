@@ -5,7 +5,6 @@ import CitySearch from '../components/Search/CitySearch'
 import WeatherDisplay from '../components/WeatherDisplay/WeatherDisplay';
 import { useAppContext } from '../context/AppContext';
 import { City } from '../data/DataTypes';
-import useLocalStorage from '../data/useLocalStorage';
 import styles from '../styles/Search.module.scss'
 
 const Search = () => {
@@ -26,6 +25,7 @@ const Search = () => {
         <Layout>
             <main className={styles.weather}>
                 <CitySearch onCityLoad={onCityLoad}/>
+                
                 {loadedCity && appContext && appContext.options && 
                     <WeatherDisplay 
                         city={loadedCity} 

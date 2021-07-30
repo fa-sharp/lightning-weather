@@ -17,7 +17,7 @@ const CurrentWeather = ({data, units, fetchError}: CurrentWeatherProps) => {
     else if (!data)
         return <div className={currentWeatherClass}>Loading current weather...</div>
 
-    const {main: {temp, feels_like, humidity}, weather, clouds, timezone} = data;
+    const {main: {temp, feels_like, humidity}, wind: { speed }, weather, clouds, timezone} = data;
     const tempUnits = tempUnitsToString(units);
 
     return (
@@ -35,13 +35,21 @@ const CurrentWeather = ({data, units, fetchError}: CurrentWeatherProps) => {
                 {`${getLocalTime(timezone)}`}<br/><br/>
                 {`Feels like: ${Math.round(feels_like)}${tempUnits}`}<br/>
                 {`Humidity: ${humidity}%`}<br/>
-                {`Clouds: ${clouds.all}%`}
+                {`Clouds: ${clouds.all}%`}<br/>
+                {`Wind: ${formattedWindSpeed(speed, units)}`}
             </aside>
         </div>
     )
 }
 
 const tempUnitsToString = (units: WeatherUnits) => units === WeatherUnits.IMPERIAL ? "° F" : "° C";
+
+const formattedWindSpeed = (speed: number, units: WeatherUnits) => {
+    if (units === WeatherUnits.IMPERIAL)
+        return `${Math.round(speed)} mph`;
+    else
+        return `${Math.round(speed*3.6)} kph`;
+}
 
 const getLocalTime = (timeOffset: number) => {
     const localTime = new Date(Date.now() + (timeOffset*1000));

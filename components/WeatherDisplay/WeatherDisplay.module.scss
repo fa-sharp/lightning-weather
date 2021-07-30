@@ -32,17 +32,14 @@
 
     // Expanded display (to show forecast)
     &.expanded {
-        min-width: 22.5rem;
+        min-width: min(22.5rem, 95%);
         min-height: 17.5rem;
-
-        margin-left: 0.5rem;
-        margin-right: 0.5rem;
     }
 
     // Optional color
     &.withColor {
         background: #d5fffb;
-        background: linear-gradient(144deg, #edfbfe 35%, #9eefff 100%);
+        background: linear-gradient(144deg, #edfbfe 50%, #9eefff 100%);
     }
 }
 
@@ -67,7 +64,8 @@
 
 // Forecast
 .forecast {
-    --day-border-hover-color: #dadada;
+    --day-border-color: hsl(0, 0%, 76%);
+    --day-border-hover-color: hsla(0, 0%, 76%, 0.3);
 
     flex: 1 0 auto;
 
@@ -86,9 +84,11 @@
     }
 
     .day {
-        width: 32%;
-        border: solid 1px var(--day-border-hover-color);
-        border-radius: 5px;
+        min-width: 32%;
+        border: solid 1px var(--day-border-color);
+        border-radius: 8px;
+        padding: 2px;
+        margin: 1px 0;
 
         &:hover {
             background-color: var(--day-border-hover-color);
@@ -96,7 +96,7 @@
 
         .forecastIcon {
             & > img {
-                max-width: 50px;
+                max-width: 2.8rem;
             }
         }
     }
@@ -112,6 +112,9 @@
         all: unset;
         line-height: 0;
 
+        height: 24px;
+        width: 24px;
+
         cursor: pointer;
 
         border: solid 1px transparent;
@@ -121,11 +124,7 @@
             border-color: black;
         }
     }
-
-    .addButton {
-        border: none;
-    }
-
+    
     // for now, does nothing
     .editButton {
         all: unset;
@@ -134,5 +133,3 @@
         visibility: hidden;
     }
 }
-
-

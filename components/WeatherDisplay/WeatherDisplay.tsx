@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { City, WeatherUnits } from '../../data/DataTypes'
 import useForecastFetch from '../../data/useForecastFetch'
 import useWeatherFetch from '../../data/useWeatherFetch'
@@ -25,7 +25,7 @@ const WeatherDisplay = ({ city, units=WeatherUnits.IMPERIAL, withColor=false, ad
 
 
     const [isGrowing, setIsGrowing] = useState(false);
-    const [isShrinking, setIsShrinking] = useState(false);
+    const [isShrinking, setIsShrinking] = useState(false); // not using this for now
 
     const [weatherData, weatherFetchError] = useWeatherFetch(city.id, units);
     const [forecastData, forecastFetchError] = useForecastFetch(city.coord.lat, city.coord.lon, units, shouldFetchForecast);
@@ -49,15 +49,18 @@ const WeatherDisplay = ({ city, units=WeatherUnits.IMPERIAL, withColor=false, ad
         <section className={`${styles.weatherDisplay} ${withColor ? styles.withColor : ""} ${(showForecast || isGrowing) ? styles.expanded : ""}`}
             aria-label={"Weather in " + cityTitle}>
             
-            <h2>{cityTitle}</h2>
-            
+            <h2>{cityTitle}</h2> 
+
+            {/* Default view: show current weather */}
             {!showForecast && 
                 <CurrentWeather data={weatherData} units={units} fetchError={weatherFetchError} />
             }
 
+            {/* Expanded view: show forecast */}
             {showForecast && !isGrowing &&
                 <Forecast data={forecastData} units={units} fetchError={forecastFetchError} />}
-
+            
+            {/* Controls (save city, remove city, show forecast) */}
             <div className={styles.controls}>
                 <button className={styles.editButton}><span className="material-icons">edit</span></button>
                 <button className={styles.expandButton} aria-label="Display/hide Forecast" title={showForecast ? "Hide Forecast" : "Show Forecast"}
@@ -68,7 +71,7 @@ const WeatherDisplay = ({ city, units=WeatherUnits.IMPERIAL, withColor=false, ad
                 {addButton && 
                     <button className={styles.addButton} title="Add to home" aria-label="Add to home"
                         onClick={() => addCity ? addCity(city) : null} >
-                            <span className="material-icons gray-hover">add_circle</span>
+                            <span className="material-icons">add</span>
                     </button>}
                 {removeButton &&
                     <button className={styles.removeButton} title="Remove" aria-label="Remove city"
@@ -76,11 +79,6 @@ const WeatherDisplay = ({ city, units=WeatherUnits.IMPERIAL, withColor=false, ad
                         <span className="material-icons">clear</span>
                     </button>}
             </div>
-
-            
-
-            
-            
         </section>
     )
 }

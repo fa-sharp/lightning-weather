@@ -1,22 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import styles from './Header.module.scss'
+import Settings from '../Settings/Settings'
+import { useAppContext } from '../../context/AppContext';
 
-interface HeaderProps {
-    
-}
+const Header = () => {
 
-const routeToSearch = '/search';
+    const appContext = useAppContext();
+    const [showSettings, setShowSettings] = useState(false);
 
-const Header = (props: HeaderProps) => {
     return (
         <nav className={styles.header}>
-            <Link href="/">
-                <a>Home</a>
-            </Link>
-            <Link href={routeToSearch}>
-                <a>Search</a>
-            </Link>
+            <div className={styles.navLeft}>
+                <Link href="/">
+                    <a>Home</a>
+                </Link>
+                <Link href="/search">
+                    <a>Search</a>
+                </Link>
+            </div>
+            <div className={styles.navRight}>
+                <button id={styles.settingsButton} onClick={() => setShowSettings(!showSettings)}>
+                    <span className="material-icons">settings</span>
+                </button>
+            </div>
+            {appContext && appContext.options &&
+                <Settings options={appContext.options}
+                    changeOption={appContext.changeOption}
+                    showing={showSettings}
+                />}
         </nav>
     )
 }

@@ -4,9 +4,33 @@
     background-color: black;
     display: flex;
     align-items: center;
-}
+    justify-content: space-between;
 
-.header > * { 
     color: white;
-    padding: 0 1rem;
+
+    a {
+        padding: 0 1rem;
+    }
+
+    .navRight {
+        display: flex;
+    }
+
+    button {
+        all: initial;
+        line-height: 0;
+        color: white;
+
+        margin: 0 1rem;
+        padding: 2px;
+        border: solid transparent 1px;
+        border-radius: 50%;
+
+        cursor: pointer;
+
+        &:hover, &:active, &:focus {
+            color: var(--blue-light);
+            border: solid white 1px;
+        }
+    }
 }

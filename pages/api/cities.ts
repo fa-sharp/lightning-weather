@@ -15,11 +15,13 @@ export default function handler(
     } else if (searchQuery.length < 2) {
         res.status(400).send("Error: search query must be at least two characters")
     } else {
-        const citySearchQuery = searchQuery as string;
+        const citySearchQuery = normalize(searchQuery as string);
         const foundCities = cityList
-            .filter(cityData => cityData.combinedName.toLowerCase().startsWith(citySearchQuery.toLowerCase()))
+            .filter(cityData => cityData.normalized.startsWith(citySearchQuery))
             .slice(0,9);
 
         res.status(200).json(foundCities);
     }
 }
+
+const normalize = (str: string) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();

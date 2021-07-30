@@ -4,6 +4,8 @@ export type City = {
     state: string;
     country: string;
     combinedName: string;
+    /** The normalized combinedName (removing accents and other special characters), enabling better/faster searching */
+    normalized: string;
     coord: { lat: number, lon: number };
 }
 

@@ -30,6 +30,10 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# local data files
+/data/city.list.min.json
+/data/country.list.json
+
 # local scripts
 /scripts
 

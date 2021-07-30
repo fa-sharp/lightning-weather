@@ -1,7 +1,7 @@
-# ⚡️ Lightning Weather
+# Lightning ⚡️ Weather
 A simple, fast weather app created with React and [Next.js](https://nextjs.org/).
 
-[Live Demo!](https://lightning-weather.vercel.app/)
+[Live Demo here!](https://lightning-weather.vercel.app/)
 
 ![Demo image](public/sample.png)
 
@@ -16,10 +16,10 @@ A simple, fast weather app created with React and [Next.js](https://nextjs.org/)
 
 
 ## Building locally
-To build/run the app locally, you will need an API key from [OpenWeatherMap](https://openweathermap.org/api). Store the key in a `.env.local` file in the root folder, containing the following:
+To build/run the app locally, you will need ```npm```, as well as an API key from [OpenWeatherMap](https://openweathermap.org/api). Store the key in a `.env.local` file in the root folder, containing the following:
 
 ```
-OPENWEATHER_API_KEY=(your_key_here)
+OPENWEATHER_API_KEY=your_key_here
 ```
 This will set up the API key as an Environment Variable for Next.js.
 

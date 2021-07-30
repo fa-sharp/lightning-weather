@@ -38,7 +38,7 @@ const WeatherDisplay = ({ city, units=WeatherUnits.IMPERIAL, withColor=false, ad
             setTimeout(() => {
                 setIsGrowing(false);
                 setShowForecast(true);
-            }, 800);
+            }, 550);
         } else
             setShowForecast(false);
     }

@@ -1,5 +1,7 @@
 import React from 'react'
 import { WeatherUnits } from '../../data/DataTypes';
+import { getFormattedCurrentLocalTime } from '../../utils/DateTimeUtils';
+import { formatWindSpeed, tempUnitsToString } from '../../utils/UnitUtils';
 import { LoadingSpinner } from '../Misc/LoadingSpinner';
 import styles from './WeatherDisplay.module.scss';
 
@@ -36,29 +38,15 @@ const CurrentWeather = ({data, units, fetchError, fadingOut}: CurrentWeatherProp
                 {`${weather[0].description}`}
             </div>
             <aside className={styles.weatherDetails}>
-                {`${getLocalTime(timezone)}`}<br/><br/>
+                {`${getFormattedCurrentLocalTime(timezone)}`}<br/><br/>
                 {`Feels like: ${Math.round(feels_like)}${tempUnits}`}<br/>
                 {`Humidity: ${humidity}%`}<br/>
                 {`Clouds: ${clouds.all}%`}<br/>
-                {`Wind: ${formattedWindSpeed(speed, units)}`}
+                {`Wind: ${formatWindSpeed(speed, units)}`}
             </aside>
         </div>
     )
 }
 
-const tempUnitsToString = (units: WeatherUnits) => units === WeatherUnits.IMPERIAL ? "° F" : "° C";
-
-const formattedWindSpeed = (speed: number, units: WeatherUnits) => {
-    if (units === WeatherUnits.IMPERIAL)
-        return `${Math.round(speed)} mph`;
-    else
-        return `${Math.round(speed*3.6)} kph`;
-}
-
-const getLocalTime = (timeOffset: number) => {
-    const localTime = new Date(Date.now() + (timeOffset*1000));
-    const formattedTime = new Intl.DateTimeFormat('default', {weekday: 'short', hour: 'numeric', minute: '2-digit', timeZone: 'UTC'}).format(localTime);
-    return formattedTime;
-}
 
 export default CurrentWeather

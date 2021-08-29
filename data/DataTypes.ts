@@ -23,3 +23,28 @@ export type UserOptions = {
 }
 
 export type ChangeUserOption = <T extends keyof UserOptions>(option: T, newValue: UserOptions[T]) => void;
+
+export type APIForecastData = {
+    timezone_offset: number
+    daily: APIForecastDay[]
+    hourly: APIForecastHour[]
+}
+
+export type APIForecastDay = {
+    dt: number
+    temp: { min: number, max: number };
+    weather: APIWeatherCondition[]
+}
+
+export type APIForecastHour = {
+    dt: number
+    temp: number
+    feels_like: number
+    weather: APIWeatherCondition[]
+}
+
+export type APIWeatherCondition = {
+    main: string
+    description: string
+    icon: string
+}

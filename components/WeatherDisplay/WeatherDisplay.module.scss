@@ -1,9 +1,7 @@
 // WeatherDisplay component
 .weatherDisplay {
-    --transition-time: 0.7s;
-
+    
     position: relative;
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -14,7 +12,7 @@
 
     text-align: center;
 
-    transition: all var(--transition-time) ease;
+    transition: all .7s ease;
 
     h2 {
         font-size: 1.2rem;
@@ -76,6 +74,7 @@
 
     flex: 1 0 auto;
 
+    position: relative;
     display: flex;
     flex-wrap: wrap;
 
@@ -97,8 +96,14 @@
         padding: 2px;
         margin: 1px 0;
 
+        cursor: pointer;
+
         &:hover {
             background-color: var(--day-border-hover-color);
+        }
+
+        &.hidden {
+            visibility: hidden;
         }
 
         .forecastIcon {
@@ -107,6 +112,12 @@
             }
         }
     }
+}
+
+// Forecast Day view
+.dayView {
+    position: absolute;
+    inset: 0;
 }
 
 // Controls
@@ -134,9 +145,6 @@
     
     // for now, does nothing
     .editButton {
-        all: unset;
-        line-height: 0;
-
         visibility: hidden;
     }
 }

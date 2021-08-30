@@ -1,26 +1,30 @@
 import Chart from 'chart.js/auto';
 import React, { useEffect, useRef } from 'react'
+import { WeatherUnits } from '../../data/DataTypes';
+import { FormattedHourlyData } from '../../utils/ForecastDataUtils';
+import { tempUnitsToString } from '../../utils/UnitUtils';
 import styles from './HourlyTempGraph.module.scss'
 
 interface Props {
-    
+    dataToDisplay: FormattedHourlyData | null
+    units: WeatherUnits
 }
 
-const HourlyTempGraph = (props: Props) => {
+const HourlyTempGraph = ({dataToDisplay: hourlyData, units}: Props) => {
 
     const chartRef = useRef<HTMLCanvasElement | null>(null);
 
     useEffect(() => {
         const context = chartRef.current?.getContext("2d");
-        if (!context)
+        if (!context || !hourlyData)
             return;
 
         const tempGraph = new Chart(context, {
             type: "line",
             data: {
-                labels: ["8am", "9am", "10am", "11am", "12pm", "1pm"],
+                labels: hourlyData.map(hourData => hourData.formattedHour),
                 datasets: [
-                    { data: [50, 60, 70, 68, 65, 70] }
+                    { data: hourlyData.map(hourData => hourData.temp) }
                 ]
             },
             options: {
@@ -30,21 +34,34 @@ const HourlyTempGraph = (props: Props) => {
                     },
                     tooltip: {
                         callbacks: {
-                            label: (item) => item.formattedValue + " °F"
+                            label: (item) => [item.formattedValue + tempUnitsToString(units), hourlyData[item.dataIndex].description]
                         }
                     }
                 }
             }
         })
 
+        return () => tempGraph.destroy();
         
-    }, [chartRef])
+    }, [chartRef, hourlyData, units])
 
-    return (
+    return !hourlyData ? null :
+    (
         <div className={styles.graphContainer}>
-            <canvas ref={chartRef} />
+            <canvas ref={chartRef} aria-label="Hourly Forecast">
+                {stringifyHourlyData(hourlyData)}
+            </canvas>
         </div>
     )
 }
+
+/** Create fallback text of hourly data for accessibility */
+const stringifyHourlyData = (dataToDisplay: FormattedHourlyData) =>
+    dataToDisplay.reduce((fallbackText, hourData) => {
+        fallbackText += `${hourData.formattedHour}: ${hourData.temp}, `;
+        return fallbackText;
+    }, "")
+
+
 
 export default HourlyTempGraph

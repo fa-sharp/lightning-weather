@@ -1,12 +1,20 @@
 
-const dayFormatter = new Intl.DateTimeFormat('default', {weekday: 'short', timeZone: 'UTC'});
-const hourFormatter = new Intl.DateTimeFormat('default', {hour: "numeric", timeZone: 'UTC'});
+const shortDayFormatter = new Intl.DateTimeFormat('default', {weekday: 'short', timeZone: 'UTC'});
+const longDayFormatter = new Intl.DateTimeFormat('default', {weekday: 'long', timeZone: 'UTC'});
+const hourFormatter = new Intl.DateTimeFormat('default', {hour: 'numeric', timeZone: 'UTC'});
 const timeFormatter = new Intl.DateTimeFormat('default', {weekday: 'short', hour: 'numeric', minute: '2-digit', timeZone: 'UTC'});
 
-/** Gets the formatted local hour in a timezone, given the UTC time and time offset from OpenWeatherAPI */
+/** Gets the formatted local hour in short form, given the UTC time and time offset from OpenWeatherAPI */
 export const getFormattedLocalDay = (time: number, timeOffset: number) => {
     const localTime = new Date((time*1000) + (timeOffset*1000));
-    const formattedDay = dayFormatter.format(localTime);
+    const formattedDay = shortDayFormatter.format(localTime);
+    return formattedDay;
+}
+
+/** Gets the formatted local hour in long form, given the UTC time and time offset from OpenWeatherAPI */
+export const getFormattedLocalDayLong = (time: number, timeOffset: number) => {
+    const localTime = new Date((time*1000) + (timeOffset*1000));
+    const formattedDay = longDayFormatter.format(localTime);
     return formattedDay;
 }
 

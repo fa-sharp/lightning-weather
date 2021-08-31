@@ -3,10 +3,14 @@
 ![demo of hourly chart](/public/hourlyDemo.png)
 ### Status/notes:
 - Hourly chart using [Chart.js](chartjs.org) seems to be working for the first day of forecast! User can click on the day to access the graph
+- First day behavior
     - Usually shows data for the next 12 hours 
-    - If the current time is between 12am-6am, the graph will start from 6am (user is likely more interested in the upcoming day's forecast)
+    - If the current time is between 12am-6am, the graph will show 6am-6pm (user is likely more interested in the upcoming day's forecast)
+- Second day behavior
+    - Show 6am-6pm
 - Hover over data points to see more data! (Chart.js library is awesome)
 - Added fallback text, containing hourly temperature data as a comma-separated list, to the graph's canvas element for accessibility
+- Some work on internationalization (units, time display, etc.)
 
 ---
 A simple, fast weather app created with React and [Next.js](https://nextjs.org/).

@@ -32,8 +32,8 @@
 
     // Expanded display (to show forecast)
     &.expanded {
-        min-width: 22.5rem;
-        min-height: 17.5rem;
+        min-width: 24.5rem;
+        min-height: 19.5rem;
     }
 
     // Optional color
@@ -90,10 +90,10 @@
     }
 
     .day {
-        min-width: 32%;
+        min-width: 31%;
         border: solid 1px var(--day-border-color);
         border-radius: 8px;
-        padding: 2px;
+        padding: 5px;
         margin: 1px 0;
 
         cursor: pointer;
@@ -118,6 +118,14 @@
 .dayView {
     position: absolute;
     inset: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+        font-size: 1.3em;
+        margin-block: 4px;
+    }
 }
 
 // Controls

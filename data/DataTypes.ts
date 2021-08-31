@@ -39,6 +39,8 @@ export type APIForecastDay = {
 export type APIForecastHour = {
     dt: number
     temp: number
+    wind_speed: number
+    clouds: number
     feels_like: number
     weather: APIWeatherCondition[]
 }

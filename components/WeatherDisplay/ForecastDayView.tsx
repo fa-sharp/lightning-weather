@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './WeatherDisplay.module.scss'
 import HourlyTempGraph from '../Chart/HourlyTempGraph'
 import { APIForecastData, WeatherUnits } from '../../data/DataTypes'
-import { getCurrentLocalHour, getFormattedLocalDay, getLocalDay } from '../../utils/DateTimeUtils'
+import { getCurrentLocalHour, getFormattedLocalDay, getFormattedLocalDayLong, getLocalDay } from '../../utils/DateTimeUtils'
 import { FormattedHourlyData, getFormattedHourlyData } from '../../utils/ForecastDataUtils'
 
 interface Props {
@@ -19,25 +19,25 @@ const ForecastDayView = ({show, day, data, units}: Props) => {
 
     const { daily, hourly, timezone_offset } = data;
     const localDay = getLocalDay(daily[day].dt, timezone_offset);
-    const localFormattedDay = getFormattedLocalDay(daily[day].dt, timezone_offset);
+    const localFormattedDay = getFormattedLocalDayLong(daily[day].dt, timezone_offset);
 
     if (day < 2) { // if the first two days, we'll display an hourly graph
         
-        const hourlyData = getFormattedHourlyData(hourly, timezone_offset);
+        const hourlyData = getFormattedHourlyData(hourly, timezone_offset, units);
         
         let dataToDisplay: FormattedHourlyData | null;
         
-        if (day === 0 && getCurrentLocalHour(timezone_offset) < 6) // if current time is between midnight and 6am, show the upcoming day's data
-            dataToDisplay = hourlyData.filter(hourData => hourData.day === localDay && hourData.hour >= 6 && hourData.hour < 18);
+        // if we're viewing today's data and the current time is on or after 6am, show the next 18 hours  
+        if (day === 0 && getCurrentLocalHour(timezone_offset) >= 6) 
+            dataToDisplay = hourlyData.slice(0, 18);
         
-        else if (day === 0) // otherwise, show the next 12 hours
-            dataToDisplay = hourlyData.slice(0, 12);
-        else
-            dataToDisplay = null;
+        else // otherwise, we show the forecast between 6am and 11pm
+            dataToDisplay = hourlyData.filter(hourData => hourData.day === localDay && hourData.hour >= 6 && hourData.hour < 24);
 
         return (
             <div className={styles.dayView}>
                 <h3>{localFormattedDay}</h3>
+                <div>Other data</div>
                 <HourlyTempGraph dataToDisplay={dataToDisplay} units={units} />
             </div>
         );
@@ -46,6 +46,7 @@ const ForecastDayView = ({show, day, data, units}: Props) => {
         return (
             <div className={styles.dayView}>
                 <h3>{localFormattedDay}</h3>
+                
             </div>
         )
     }

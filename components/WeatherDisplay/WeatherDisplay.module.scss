@@ -34,6 +34,7 @@
     &.expanded {
         min-width: 24.5rem;
         min-height: 19.5rem;
+        margin: 0.5rem;
     }
 
     // Optional color
@@ -91,6 +92,7 @@
 
     .day {
         min-width: 31%;
+        background: white;
         border: solid 1px var(--day-border-color);
         border-radius: 8px;
         padding: 5px;
@@ -112,6 +114,14 @@
             }
         }
     }
+
+    // Back button when viewing a day's forecast
+    .backButton {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        z-index: 10;
+    }
 }
 
 // Forecast Day view
@@ -123,36 +133,49 @@
     flex-direction: column;
 
     h3 {
-        font-size: 1.3em;
+        font-size: 1.2em;
         margin-block: 4px;
+    }
+
+    .dayNavigation {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        align-self: center;
+        width: 40%;
     }
 }
 
-// Controls
+// Weather display ontrols (expand, remove)
 .controls {
     display: flex;
     justify-content: space-between;
     width: 100%;
-
-    button {
-        all: unset;
-        line-height: 0;
-
-        height: 24px;
-        width: 24px;
-
-        cursor: pointer;
-
-        border: solid 1px transparent;
-        border-radius: 50%;
-
-        &:hover, &:active, &:focus {
-            border-color: black;
-        }
-    }
     
     // for now, does nothing
     .editButton {
+        visibility: hidden;
+    }
+}
+
+// All control buttons
+button.controlButton {
+    all: unset;
+    line-height: 0;
+
+    height: 24px;
+    width: 24px;
+
+    cursor: pointer;
+
+    border: solid 1px transparent;
+    border-radius: 50%;
+
+    &:hover, &:active, &:focus {
+        border-color: black;
+    }
+
+    &.hidden {
         visibility: hidden;
     }
 }

@@ -62,19 +62,19 @@ const WeatherDisplay = ({ city, units=WeatherUnits.IMPERIAL, withColor=false, ad
             
             {/* Controls (save city, remove city, show forecast) */}
             <div className={styles.controls}>
-                <button className={styles.editButton}><span className="material-icons">edit</span></button>
-                <button className={styles.expandButton} aria-label="Display/hide Forecast" title={showForecast ? "Hide Forecast" : "Show Forecast"}
+                <button className={`${styles.controlButton} ${styles.editButton}`}><span className="material-icons">edit</span></button>
+                <button className={styles.controlButton} aria-label="Display/hide Forecast" title={showForecast ? "Hide Forecast" : "Show Forecast"}
                     onClick={onExpand}>
                     {showForecast ? <span className="material-icons">expand_less</span>
                         : <span className="material-icons">expand_more</span>}
                 </button>
                 {addButton && 
-                    <button className={styles.addButton} title="Add to home" aria-label="Add to home"
+                    <button className={styles.controlButton} title="Add to home" aria-label="Add to home"
                         onClick={() => addCity ? addCity(city) : null} >
                             <span className="material-icons">add</span>
                     </button>}
                 {removeButton &&
-                    <button className={styles.removeButton} title="Remove" aria-label="Remove city"
+                    <button className={styles.controlButton} title="Remove" aria-label="Remove city"
                         onClick={() => removeCity ? removeCity(city) : null} >
                         <span className="material-icons">clear</span>
                     </button>}

@@ -33,7 +33,7 @@
     // Expanded display (to show forecast)
     &.expanded {
         min-width: 24.5rem;
-        min-height: 19.5rem;
+        min-height: 19rem;
         margin: 0.5rem;
     }
 
@@ -69,7 +69,7 @@
 }
 
 // Forecast
-.forecast {
+.forecast.dailyView {
     --day-border-color: hsl(0, 0%, 76%);
     --day-border-hover-color: hsla(0, 0%, 76%, 0.3);
 
@@ -79,25 +79,31 @@
     display: flex;
     flex-wrap: wrap;
 
-    align-items: flex-start;
+    align-items: stretch;
     justify-content: space-between;
+    gap: 4px;
     
     width: 100%;
-
-    font-size: 0.8rem;
 
     h3 {
         font-size: .9rem;
     }
 
     .day {
-        min-width: 31%;
-        background: white;
+        flex: 1 1 23%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+
+        background: transparent;
         border: solid 1px var(--day-border-color);
         border-radius: 8px;
-        padding: 5px;
-        margin: 1px 0;
+        padding: 5px 0 0;
 
+        font: inherit;
+        font-size: 0.75rem;
         cursor: pointer;
 
         &:hover {
@@ -114,39 +120,49 @@
             }
         }
     }
-
-    // Back button when viewing a day's forecast
-    .backButton {
-        position: absolute;
-        top: 2px;
-        left: 2px;
-        z-index: 10;
-    }
 }
 
 // Forecast Day view
-.dayView {
-    position: absolute;
-    inset: 0;
+.forecast.dayView {
+    flex: 1 0 auto;
+    position: relative;
+    width: 100%;
 
     display: flex;
     flex-direction: column;
 
     h3 {
-        font-size: 1.2em;
+        font-size: 1rem;
         margin-block: 4px;
     }
-
-    .dayNavigation {
+    
+    & > .dayViewNavigation {
         display: flex;
         justify-content: space-between;
         align-items: center;
         align-self: center;
         width: 40%;
+
+        // Back button when viewing a day's forecast
+        .backButton {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            z-index: 10;
+        }
+    }
+
+    & > .dayViewContent {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: space-around;
+
+        line-height: 1.5;
     }
 }
 
-// Weather display ontrols (expand, remove)
+// Weather display controls (expand, remove)
 .controls {
     display: flex;
     justify-content: space-between;

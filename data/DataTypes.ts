@@ -32,8 +32,15 @@ export type APIForecastData = {
 
 export type APIForecastDay = {
     dt: number
-    temp: { min: number, max: number };
+    temp: { min: number, max: number, morn: number, day: number, eve: number, night: number };
     weather: APIWeatherCondition[]
+    humidity: number
+    clouds: number
+    wind_speed: number
+    rain?: number
+    sunrise: number
+    sunset: number
+    moon_phase: number
 }
 
 export type APIForecastHour = {

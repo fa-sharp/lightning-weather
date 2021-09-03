@@ -1,7 +1,7 @@
 import React from 'react'
 import { WeatherUnits } from '../../data/DataTypes';
 import { getFormattedCurrentLocalTime } from '../../utils/DateTimeUtils';
-import { formatWindSpeed, tempUnitsToString } from '../../utils/UnitUtils';
+import { formatPercentage, formatTemp, formatWindSpeed, tempUnitsToString } from '../../utils/UnitUtils';
 import { LoadingSpinner } from '../Misc/LoadingSpinner';
 import styles from './WeatherDisplay.module.scss';
 
@@ -23,7 +23,7 @@ const CurrentWeather = ({data, units, fetchError, fadingOut}: CurrentWeatherProp
             <div>Loading current weather... <LoadingSpinner /></div>
         </div>
 
-    const {main: {temp, feels_like, humidity}, wind: { speed }, weather, clouds, timezone} = data;
+    const {main: {temp, feels_like, humidity}, wind, weather, clouds, timezone} = data;
     const tempUnits = tempUnitsToString(units);
 
     return (
@@ -31,18 +31,18 @@ const CurrentWeather = ({data, units, fetchError, fadingOut}: CurrentWeatherProp
             <div>
                 <div className={styles.weatherIcon}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={`/icons/${weather[0].icon}.png`} alt="weather condition icon"></img>
+                    <img src={`/icons/${weather[0].icon}.png`} alt={weather[0].main}></img>
                 </div>
-                <h3>{`${Math.round(temp)}${tempUnits}`}</h3>
-                <h3>{`${weather[0].main}`}</h3>
+                <h3>{formatTemp(temp, units)}</h3>
+                <h3>{weather[0].main}</h3>
                 {`${weather[0].description}`}
             </div>
             <aside className={styles.weatherDetails}>
                 {`${getFormattedCurrentLocalTime(timezone)}`}<br/><br/>
-                {`Feels like: ${Math.round(feels_like)}${tempUnits}`}<br/>
-                {`Humidity: ${humidity}%`}<br/>
-                {`Clouds: ${clouds.all}%`}<br/>
-                {`Wind: ${formatWindSpeed(speed, units)}`}
+                {`Feels like: ${formatTemp(feels_like, units)}`}<br/>
+                {`Humidity: ${formatPercentage(humidity)}`}<br/>
+                {`Clouds: ${formatPercentage(clouds.all)}`}<br/>
+                {`Wind: ${formatWindSpeed(wind.speed, units)}`}
             </aside>
         </div>
     )

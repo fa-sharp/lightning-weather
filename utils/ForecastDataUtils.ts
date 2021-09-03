@@ -1,8 +1,6 @@
-import { APIForecastHour, WeatherUnits } from "../data/DataTypes";
-import { getFormattedLocalDay, getFormattedLocalHour, getLocalDay, getLocalHour } from "./DateTimeUtils";
-import { formatPercentage, formatTemp, formatWindSpeed } from "./UnitUtils";
-
-const {METRIC, IMPERIAL} = WeatherUnits;
+import { APIForecastDay, APIForecastHour, WeatherUnits } from "../data/DataTypes";
+import { getFormattedLocalDay, getFormattedLocalDayLong, getFormattedLocalHour, getFormattedLocalTime, getLocalDay, getLocalHour } from "./DateTimeUtils";
+import { formatNumber, formatPercentage, formatRain, formatTemp, formatWindSpeed } from "./UnitUtils";
 
 export const getFormattedHourlyData = (hourly: APIForecastHour[], timeOffset: number, units: WeatherUnits) =>
     hourly.map(hourData => {
@@ -21,4 +19,37 @@ export const getFormattedHourlyData = (hourly: APIForecastHour[], timeOffset: nu
         return { day, hour, formattedDay, formattedHour, temp, formattedTemp, formattedWind, formattedClouds, description }
     });
 
-export type FormattedHourlyData = ReturnType<typeof getFormattedHourlyData>;
+export type FormattedHourlyDataType = ReturnType<typeof getFormattedHourlyData>;
+
+export const getFormattedDailyData = (daily: APIForecastDay[], timeOffset: number, units: WeatherUnits) => 
+    daily.map(dayData => {
+        const { dt, temp, weather, humidity, clouds, wind_speed, sunrise, sunset, moon_phase, rain } = dayData;
+        const { description, icon, main } = weather[0];
+
+        return {
+            day: getLocalDay(dt, timeOffset),
+            formattedDay: getFormattedLocalDay(dt, timeOffset),
+            formattedDayLong: getFormattedLocalDayLong(dt, timeOffset),
+
+            description, icon, main,
+            humidity: formatPercentage(humidity),
+            rain: rain ? formatRain(rain, units) : undefined,
+            clouds: formatPercentage(clouds),
+            wind: formatWindSpeed(wind_speed, units),
+            
+            minTemp: formatTemp(temp.min, units),
+            minTempNoUnits: formatNumber(Math.round(temp.min)),
+            maxTemp: formatTemp(temp.max, units),
+            maxTempNoUnits: formatNumber(Math.round(temp.max)),
+            morningTemp: formatTemp(temp.morn, units),
+            afternoonTemp: formatTemp(temp.day, units),
+            eveningTemp: formatTemp(temp.eve, units),
+            nightTemp: formatTemp(temp.night, units),
+
+            sunriseTime: getFormattedLocalTime(sunrise, timeOffset),
+            sunsetTime: getFormattedLocalTime(sunset, timeOffset)
+        }
+    })
+
+
+export type FormattedDailyDataType = ReturnType<typeof getFormattedDailyData>;

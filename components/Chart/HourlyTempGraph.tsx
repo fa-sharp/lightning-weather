@@ -1,12 +1,11 @@
 import Chart from 'chart.js/auto';
 import React, { useEffect, useRef } from 'react'
 import { WeatherUnits } from '../../data/DataTypes';
-import { FormattedHourlyData } from '../../utils/ForecastDataUtils';
-import { formatTemp, tempUnitsToString } from '../../utils/UnitUtils';
+import { FormattedHourlyDataType } from '../../utils/ForecastDataUtils';
 import styles from './HourlyTempGraph.module.scss'
 
 interface Props {
-    dataToDisplay: FormattedHourlyData | null
+    dataToDisplay: FormattedHourlyDataType | null
     units: WeatherUnits
 }
 
@@ -87,7 +86,7 @@ const HourlyTempGraph = ({dataToDisplay: hourlyData, units}: Props) => {
 }
 
 /** Create fallback text of hourly data for accessibility */
-const stringifyHourlyData = (dataToDisplay: FormattedHourlyData) =>
+const stringifyHourlyData = (dataToDisplay: FormattedHourlyDataType) =>
     dataToDisplay.reduce((fallbackText, hourData) => {
         fallbackText += `${hourData.formattedHour}: ${hourData.temp}, `;
         return fallbackText;

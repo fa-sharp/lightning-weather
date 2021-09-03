@@ -5,11 +5,11 @@ import { FormattedHourlyDataType } from '../../utils/ForecastDataUtils';
 import styles from './HourlyTempGraph.module.scss'
 
 interface Props {
-    dataToDisplay: FormattedHourlyDataType | null
+    hourlyData: FormattedHourlyDataType | null
     units: WeatherUnits
 }
 
-const HourlyTempGraph = ({dataToDisplay: hourlyData, units}: Props) => {
+const HourlyTempGraph = ({hourlyData, units}: Props) => {
 
     const chartRef = useRef<HTMLCanvasElement | null>(null);
 

@@ -32,7 +32,7 @@
 
     // Expanded display (to show forecast)
     &.expanded {
-        min-width: 24.5rem;
+        min-width: 25rem;
         min-height: 19rem;
         margin: 0.5rem;
     }
@@ -68,7 +68,7 @@
     }
 }
 
-// Forecast
+// Forecast daily view
 .forecast.dailyView {
     --day-border-color: hsl(0, 0%, 76%);
     --day-border-hover-color: hsla(0, 0%, 76%, 0.3);
@@ -141,7 +141,7 @@
         justify-content: space-between;
         align-items: center;
         align-self: center;
-        width: 40%;
+        min-width: 40%;
 
         // Back button when viewing a day's forecast
         .backButton {
@@ -158,7 +158,22 @@
         align-items: center;
         justify-content: space-around;
 
-        line-height: 1.5;
+        font-size: .9rem;
+        line-height: 1.6;
+
+        .hourlyButton {
+            all: unset;
+    
+            cursor: pointer;
+    
+            padding: 0 2px;
+            border: dotted 2px #bbbbbb;
+            border-radius: 4px;
+    
+            &:hover, &:active, &:focus {
+                border: solid 2px black;
+            }
+        }
     }
 }
 

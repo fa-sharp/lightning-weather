@@ -41,7 +41,7 @@ const ForecastElement = ({data, units}: {data: APIForecastData, units: WeatherUn
     const dailyData = useMemo(() => getFormattedDailyData(daily, timezone_offset, units), [daily, timezone_offset, units]);
     const hourlyData = useMemo(() => getFormattedHourlyData(hourly, timezone_offset, units), [hourly, timezone_offset, units]);
 
-    /** User clicks on a day, to see the day detailed forecast (hourly, sunrise, etc.) */
+    /** User clicks on a day, to see the day's detailed forecast (hourly, sunrise, etc.) */
     const onShowDayView = useCallback((numDay: number) => {
         setDayInView(numDay);
         setShowDayView(true);
@@ -60,9 +60,17 @@ const ForecastElement = ({data, units}: {data: APIForecastData, units: WeatherUn
     return (
         <section className={`${styles.forecast} ${showDayView ? forecastDayClass : forecastDailyClass}`} aria-label="Forecast">
             {!showDayView ? 
-                <ForecastDailyView dailyData={dailyData} onShowDayForecast={onShowDayView} />
-                
-                : <ForecastDayView numDay={dayInView} data={data} dailyData={dailyData} hourlyData={hourlyData} units={units} onNavigate={onNavigateDayView} onExitDayView={onExitDayView} />}
+                <ForecastDailyView 
+                    dailyData={dailyData} 
+                    onShowDayForecast={onShowDayView} />
+                : 
+                <ForecastDayView 
+                    numDay={dayInView} 
+                    dailyData={dailyData} 
+                    hourlyData={hourlyData} 
+                    units={units} 
+                    onNavigate={onNavigateDayView} 
+                    onExitDayView={onExitDayView} />}
         </section>
     )
 }

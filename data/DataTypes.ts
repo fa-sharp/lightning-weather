@@ -38,6 +38,7 @@ export type APIForecastDay = {
     clouds: number
     wind_speed: number
     rain?: number
+    snow?: number
     sunrise: number
     sunset: number
     moon_phase: number

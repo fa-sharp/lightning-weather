@@ -45,5 +45,5 @@ export const formatWindSpeed = (speed: number, units: WeatherUnits) =>
 
 export const formatPercentage = (percent: number) => percentFormatter.format(percent);
 
-export const formatRain = (mm: number, units: WeatherUnits) =>
+export const formatMM = (mm: number, units: WeatherUnits) =>
     (units === IMPERIAL) ? inchFormatter.format(mm / 25.4) : mmFormatter.format(mm)

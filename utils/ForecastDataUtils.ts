@@ -1,6 +1,6 @@
 import { APIForecastDay, APIForecastHour, WeatherUnits } from "../data/DataTypes";
 import { getFormattedLocalDay, getFormattedLocalDayLong, getFormattedLocalHour, getFormattedLocalTime, getLocalDay, getLocalHour } from "./DateTimeUtils";
-import { formatNumber, formatPercentage, formatRain, formatTemp, formatWindSpeed } from "./UnitUtils";
+import { formatNumber, formatPercentage, formatMM, formatTemp, formatWindSpeed } from "./UnitUtils";
 
 export const getFormattedHourlyData = (hourly: APIForecastHour[], timeOffset: number, units: WeatherUnits) =>
     hourly.map(hourData => {
@@ -23,7 +23,7 @@ export type FormattedHourlyDataType = ReturnType<typeof getFormattedHourlyData>;
 
 export const getFormattedDailyData = (daily: APIForecastDay[], timeOffset: number, units: WeatherUnits) => 
     daily.map(dayData => {
-        const { dt, temp, weather, humidity, clouds, wind_speed, sunrise, sunset, moon_phase, rain } = dayData;
+        const { dt, temp, weather, humidity, clouds, wind_speed, sunrise, sunset, moon_phase, rain, snow } = dayData;
         const { description, icon, main } = weather[0];
 
         return {
@@ -33,7 +33,8 @@ export const getFormattedDailyData = (daily: APIForecastDay[], timeOffset: numbe
 
             description, icon, main,
             humidity: formatPercentage(humidity),
-            rain: rain ? formatRain(rain, units) : undefined,
+            rain: rain ? formatMM(rain, units) : undefined,
+            snow: snow ? formatMM(snow, units) : undefined,
             clouds: formatPercentage(clouds),
             wind: formatWindSpeed(wind_speed, units),
             

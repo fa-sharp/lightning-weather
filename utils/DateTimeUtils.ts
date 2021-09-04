@@ -1,6 +1,6 @@
 
 const shortDayFormatter = new Intl.DateTimeFormat('default', {weekday: 'short', timeZone: 'UTC'});
-const longDayFormatter = new Intl.DateTimeFormat('default', {weekday: 'long', timeZone: 'UTC'});
+const longDayFormatter = new Intl.DateTimeFormat('default', {weekday: 'long', month: "short", day: "numeric", timeZone: 'UTC'});
 const hourFormatter = new Intl.DateTimeFormat('default', {hour: 'numeric', timeZone: 'UTC'});
 const timeFormatter = new Intl.DateTimeFormat('default', {hour: 'numeric', minute: '2-digit', timeZone: 'UTC'});
 const dayTimeFormatter = new Intl.DateTimeFormat('default', {weekday: 'short', hour: 'numeric', minute: '2-digit', timeZone: 'UTC'});

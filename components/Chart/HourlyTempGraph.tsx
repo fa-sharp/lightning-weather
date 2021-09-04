@@ -54,8 +54,7 @@ const HourlyTempGraph = ({hourlyData, units}: Props) => {
                     },
                     tooltip: {
                         displayColors: false,
-                        callbacks: {
-                            
+                        callbacks: {  
                             label: (item) => {
                                 const {formattedTemp, formattedWind, formattedClouds, description} = hourlyData[item.dataIndex];
                                 return [
@@ -87,7 +86,7 @@ const HourlyTempGraph = ({hourlyData, units}: Props) => {
 /** Create fallback text of hourly data for accessibility */
 const stringifyHourlyData = (dataToDisplay: FormattedHourlyDataType) =>
     dataToDisplay.reduce((fallbackText, hourData) => {
-        fallbackText += `${hourData.formattedHour}: ${hourData.temp}, `;
+        fallbackText += `${hourData.formattedHour}: ${hourData.formattedTemp}, `;
         return fallbackText;
     }, "")
 

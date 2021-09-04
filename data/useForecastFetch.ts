@@ -18,7 +18,7 @@ const fetcher = (url: string) => fetch(url).then(res => {
 const useForecastFetch = (lat: number, lon: number, units: WeatherUnits, shouldFetch: boolean) => {
     
     const url = `${BASE_URL}?lat=${lat}&lon=${lon}&units=${units}`;
-    const { data, error } = useSWRImmutable(shouldFetch ? url : null, fetcher, { revalidateOnFocus: false, shouldRetryOnError: false });
+    const { data, error } = useSWRImmutable(shouldFetch ? url : null, fetcher);
 
     return [data, error];
 }

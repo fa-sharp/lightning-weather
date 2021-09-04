@@ -1,6 +1,6 @@
 import { APIForecastDay, APIForecastHour, WeatherUnits } from "../data/DataTypes";
 import { getFormattedLocalDay, getFormattedLocalDayLong, getFormattedLocalHour, getFormattedLocalTime, getLocalDay, getLocalHour } from "./DateTimeUtils";
-import { formatNumber, formatPercentage, formatMM, formatTemp, formatWindSpeed } from "./UnitUtils";
+import { formatNumber, formatPercentage, formatMM, formatTemp, formatWindSpeed, roundToTwo } from "./UnitUtils";
 
 export const getFormattedHourlyData = (hourly: APIForecastHour[], timeOffset: number, units: WeatherUnits) =>
     hourly.map(hourData => {
@@ -11,7 +11,7 @@ export const getFormattedHourlyData = (hourly: APIForecastHour[], timeOffset: nu
         const formattedDay = getFormattedLocalDay(dt, timeOffset);
         const hour = getLocalHour(dt, timeOffset);
         const formattedHour = getFormattedLocalHour(dt, timeOffset);
-        const temp = Math.round(hourData.temp);
+        const temp = roundToTwo(hourData.temp);
         const formattedTemp = formatTemp(temp, units);
         const formattedWind = formatWindSpeed(wind_speed, units);
         const formattedClouds = formatPercentage(clouds);

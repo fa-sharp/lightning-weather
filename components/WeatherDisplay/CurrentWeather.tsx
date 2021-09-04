@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { WeatherUnits } from '../../data/DataTypes';
 import { getFormattedCurrentLocalTime } from '../../utils/DateTimeUtils';
 import { formatPercentage, formatTemp, formatWindSpeed, tempUnitsToString } from '../../utils/UnitUtils';
@@ -16,6 +16,15 @@ const currentWeatherClass = styles.currentWeather;
 
 const CurrentWeather = ({data, units, fetchError, fadingOut}: CurrentWeatherProps) => {
 
+    // Refresh the display every 30 seconds (to update the current time display)
+    const [refresh, setRefresh] = useState(0);
+    useEffect(() => {
+        const refreshInterval = setInterval(() => {
+            setRefresh(prev => prev + 1);
+        }, (1000*30))
+        return () => clearInterval(refreshInterval);
+    }, []);
+
     if (fetchError)
         return <div className={currentWeatherClass}>Failed to fetch weather 😭</div>
     else if (!data)
@@ -24,7 +33,6 @@ const CurrentWeather = ({data, units, fetchError, fadingOut}: CurrentWeatherProp
         </div>
 
     const {main: {temp, feels_like, humidity}, wind, weather, clouds, timezone} = data;
-    const tempUnits = tempUnitsToString(units);
 
     return (
         <div className={`${currentWeatherClass} ${fadingOut ? styles.fadingOut : ""}`}>

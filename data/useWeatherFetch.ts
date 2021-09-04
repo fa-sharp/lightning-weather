@@ -18,7 +18,7 @@ const fetcher = (url: string) => fetch(url).then(res => {
 const useWeatherFetch = (cityId: number, units: WeatherUnits) => {
 
     const url = `${BASE_URL}?cityId=${cityId}&units=${units}`
-    const { data, error } = useSWR(url, fetcher, {revalidateOnFocus: false, shouldRetryOnError: false}); // limited free API requests, so disabling revalidation
+    const { data, error } = useSWR(url, fetcher, {revalidateOnFocus: false, shouldRetryOnError: false, refreshInterval: 1000*60*4}); // refresh interval of four minutes
 
     return [data, error];
 }

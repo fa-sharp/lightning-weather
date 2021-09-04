@@ -5,7 +5,7 @@ import { FormattedHourlyDataType } from '../../utils/ForecastDataUtils';
 import styles from './HourlyTempGraph.module.scss'
 
 interface Props {
-    hourlyData: FormattedHourlyDataType | null
+    hourlyData: FormattedHourlyDataType
     units: WeatherUnits
 }
 
@@ -75,8 +75,7 @@ const HourlyTempGraph = ({hourlyData, units}: Props) => {
         
     }, [chartRef, hourlyData, units])
 
-    return !hourlyData ? null :
-    (
+    return (
         <div className={styles.graphContainer}>
             <canvas ref={chartRef} aria-label="Hourly Forecast">
                 {stringifyHourlyData(hourlyData)}

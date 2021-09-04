@@ -61,7 +61,8 @@ const ForecastDayView = ({numDay, dailyData, hourlyData, units, onNavigate, onEx
                     </div>
                     <aside>
                         {hourlyGraphData &&
-                            <button className={styles.hourlyButton} onClick={() => setShowHourlyGraph(true)}>
+                            <button className={styles.hourlyButton} title="Show hourly forecast"
+                                onClick={() => setShowHourlyGraph(true)}>
                                 ⌛️ Hourly</button>}
                         <div>{`Morning: ${morningTemp}`}</div>
                         <div>{`Afternoon: ${afternoonTemp}`}</div>
@@ -93,8 +94,8 @@ const getHourlyDataToDisplay = (numDay: number, day: number, hourlyData: Formatt
     else // otherwise, we show the forecast between 6am and 11pm
         dataToDisplay = hourlyData.filter(hourData => hourData.day === day && hourData.hour >= 6 && hourData.hour < 24);
 
-    // return null if there's not much data to show
-    return (dataToDisplay.length >= 3) ? dataToDisplay : null;
+    // return null if there's less than 6 hours to show
+    return (dataToDisplay.length >= 6) ? dataToDisplay : null;
 }
 
 export default ForecastDayView

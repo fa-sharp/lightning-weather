@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { WeatherUnits } from '../../data/DataTypes';
 import { getFormattedCurrentLocalTime } from '../../utils/DateTimeUtils';
-import { formatPercentage, formatTemp, formatWindSpeed, tempUnitsToString } from '../../utils/UnitUtils';
+import { formatPercentage, formatTemp, formatWindSpeed } from '../../utils/UnitUtils';
 import { LoadingSpinner } from '../Misc/LoadingSpinner';
 import styles from './WeatherDisplay.module.scss';
 

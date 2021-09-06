@@ -49,9 +49,9 @@ const ForecastDayView = ({numDay, dailyData, hourlyData, units, onNavigate, onEx
             {!showHourlyGraph ?
                 <div className={styles.dayViewContent}>
                     <div>
-                        <Image src={`/icons/${icon}.png`} alt={main} height={64} width={64} /><br />
+                        <Image src={`/icons/${icon}.png`} alt={main} height={56} width={56} /><br />
                         <div>{description}</div>
-                        <div>{`🌡 Hi ${maxTempNoUnits}, Lo ${minTemp}`}</div>
+                        <div>{`🌡 Hi ${maxTempNoUnits} / Lo ${minTemp}`}</div>
                         <br />
                         {rain && <div>{`💦 Rain: ${rain}`}</div>}
                         {snow && <div>{`❄️ Snow: ${snow}`}</div>}

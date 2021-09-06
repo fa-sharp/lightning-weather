@@ -32,15 +32,13 @@ const percentFormatter = new Intl.NumberFormat('default', {
     style: 'unit', unit: "percent", notation: 'compact'
 });
 
+export const roundToOne = (num: number) => Math.round((num + Number.EPSILON ) * 10 ) / 10;
 export const roundToTwo = (num: number) => Math.round((num + Number.EPSILON ) * 100 ) / 100;
 
 export const formatNumber = (number: number) => numberFormatter.format(number);
 
 export const formatTemp = (temp: number, units: WeatherUnits) => 
     (units === IMPERIAL) ? fahrenheitFormatter.format(temp) : celsiusFormatter.format(temp)
-
-export const tempUnitsToString = (units: WeatherUnits) => 
-    (units === IMPERIAL) ? "° F" : "° C"
 
 export const formatWindSpeed = (speed: number, units: WeatherUnits) =>
     (units === IMPERIAL) ? mphFormatter.format(speed) : kphFormatter.format(speed * 3.6)
@@ -49,4 +47,4 @@ export const formatPercentage = (percent: number) => percentFormatter.format(per
 
 export const formatMM = (mm: number, units: WeatherUnits) => 
     (units === IMPERIAL) ? inchFormatter.format(roundToTwo(mm / 25.4)) 
-                        : mmFormatter.format(roundToTwo(mm))
+                        : mmFormatter.format(roundToOne(mm))

@@ -2,6 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@material-ui/core': ^4.12.2
+  '@types/better-sqlite3': ^7.4.1
   '@types/lodash': ^4.14.171
   '@types/react': 17.0.13
   better-sqlite3: ^7.4.4
@@ -18,6 +19,7 @@ specifiers:
 
 dependencies:
   '@material-ui/core': 4.12.3_7042bb3c71a64c9ee0ea6af36e0e4b2c
+  '@types/better-sqlite3': 7.4.1
   better-sqlite3: 7.4.4
   chart.js: 3.6.0
   lodash: 4.17.21
@@ -369,6 +371,12 @@ packages:
   /@rushstack/eslint-patch/1.1.0:
     resolution: {integrity: sha512-JLo+Y592QzIE+q7Dl2pMUtt4q8SKYI5jDrZxrozEQxnGVOyYE+GWK9eLkwTaeN9DDctlaRAQ3TBmzZ1qdLE30A==}
     dev: true
+
+  /@types/better-sqlite3/7.4.1:
+    resolution: {integrity: sha512-ReUz3npCelyRMEVF1inVnP1rlnCSD4LRwaPvfJViR6ZiSXRVTBtLHU52sdwtbyQJQjo6RRPghlKn9e1PpQFptw==}
+    dependencies:
+      '@types/node': 16.11.6
+    dev: false
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=}

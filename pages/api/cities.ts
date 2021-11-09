@@ -1,8 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import cityListJson from '../../data/city.list.formatted.json'
 import { City } from '../../data/DataTypes';
-
-const cityList = cityListJson as City[];
+import searchCitiesDB from '../../data/searchCitiesDB';
 
 export default function handler(
     req: NextApiRequest,
@@ -15,13 +13,7 @@ export default function handler(
     } else if (searchQuery.length < 2) {
         res.status(400).send("Error: search query must be at least two characters")
     } else {
-        const citySearchQuery = normalize(searchQuery as string);
-        const foundCities = cityList
-            .filter(cityData => cityData.normalized.startsWith(citySearchQuery))
-            .slice(0,9);
-
+        const foundCities = searchCitiesDB(searchQuery as string);
         res.status(200).json(foundCities);
     }
 }
-
-const normalize = (str: string) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();

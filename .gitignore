@@ -35,7 +35,6 @@ yarn-error.log*
 /data/country.list.json
 
 # local scripts
-/scripts
 
 # local testing
 /test

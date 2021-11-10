@@ -1,11 +1,11 @@
 import betterSQLite from 'better-sqlite3'
-import citiesJSON from '../data/city.list.formatted.json'
+import citiesJSON from '../../data/city.list.formatted.json'
 import { readFileSync } from 'fs'
 
-const db = betterSQLite('data/cities.db');
+const db = betterSQLite('cities.db');
 
 /** Create the City table */
-const createTableSQL = readFileSync('scripts/001-cities.sql', 'utf8');
+const createTableSQL = readFileSync('db_scripts/001-cities.sql', 'utf8');
 db.exec(createTableSQL);
 
 const numCities = citiesJSON.length;
@@ -30,7 +30,7 @@ while (citiesCursor < numCities) {
 }
 
 /** Create an Index on the Normalized column, as we'll be running most search queries on that column */
-const createIndexSQL = readFileSync('scripts/002-index.sql', 'utf8');
+const createIndexSQL = readFileSync('db_scripts/002-index.sql', 'utf8');
 db.exec(createIndexSQL);
 
 db.close()

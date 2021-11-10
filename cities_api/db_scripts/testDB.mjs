@@ -1,7 +1,7 @@
 import betterSQLite from 'better-sqlite3'
 
 
-const db = betterSQLite('data/cities.db');
+const db = betterSQLite('cities.db');
 
 const searchCitiesSQL = db.prepare('SELECT * FROM City WHERE normalized LIKE ? LIMIT 10');
 

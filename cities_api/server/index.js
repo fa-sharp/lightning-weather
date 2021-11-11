@@ -22,7 +22,7 @@ app.get("/lookup", requireAPIKey, (req, res) => {
 
     try {
         const results = searchCitiesDB(normalizedQuery, limit);
-        return res.send(results);
+        return res.json(results);
     }
     catch (err) {
         console.error("Error searching for cities in database: ", err);

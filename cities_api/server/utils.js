@@ -1,15 +1,15 @@
 import { API_KEY } from "./index.js";
 
-/** Check for API key in query */
+/** Middleware to check for API key in headers */
 export const requireAPIKey = (req, res, next) => {
 
     // If no API key setup, skip check
     if (!API_KEY)
         return next()
 
-    const { api_id } = req.query;
+    const { cities_api_key } = req.headers;
 
-    if (api_id === API_KEY)
+    if (cities_api_key === API_KEY)
         next()
     else
         res.status(403).send({reason: "No Ma'am! Invalid API key!"})

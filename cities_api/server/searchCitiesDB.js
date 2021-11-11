@@ -1,6 +1,8 @@
 import sqlite from 'better-sqlite3'
 
-const db = sqlite('server/cities.db', { fileMustExist: true, verbose: console.log });
+const isProduction = process.env.NODE_ENV === 'production'
+
+const db = sqlite('server/cities.db', { fileMustExist: true, verbose: isProduction ? null : console.log });
 console.log("Connected to SQLite database.")
 
 /** SQL command to search for cities */

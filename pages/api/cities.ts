@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { City } from '../../data/DataTypes';
 
 const CITIES_API_ENDPOINT = process.env.CITIES_API_ENDPOINT
-const CITIES_API_KEY = process.env.CITIES_API_KEY
+const CITIES_API_KEY = process.env.CITIES_API_KEY || ""
 
 export default async function handler(
     req: NextApiRequest,
@@ -24,7 +24,7 @@ export default async function handler(
 }
 
 async function fetchCities(searchQuery: string, limit: number) {
-    const url = `${CITIES_API_ENDPOINT}?search=${searchQuery}&top=${limit}&api_id=${CITIES_API_KEY}`
-    const response = await fetch(url);
+    const url = `${CITIES_API_ENDPOINT}?search=${searchQuery}&top=${limit}`
+    const response = await fetch(url, { headers: { CITIES_API_KEY }});
     return response;
 }

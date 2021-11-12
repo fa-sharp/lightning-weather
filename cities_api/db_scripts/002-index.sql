@@ -1,0 +1,1 @@
+CREATE INDEX normalized_idx ON City (normalized);

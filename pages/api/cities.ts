@@ -1,27 +1,30 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import cityListJson from '../../data/city.list.formatted.json'
 import { City } from '../../data/DataTypes';
 
-const cityList = cityListJson as City[];
+const CITIES_API_ENDPOINT = process.env.CITIES_API_ENDPOINT
+const CITIES_API_KEY = process.env.CITIES_API_KEY || ""
 
-export default function handler(
+export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<City[] | string>
 ) {
     const { query: { search: searchQuery } } = req;
 
     if (!searchQuery) {
-        res.status(400).send("Error: no search query found");
-    } else if (searchQuery.length < 2) {
-        res.status(400).send("Error: search query must be at least two characters")
-    } else {
-        const citySearchQuery = normalize(searchQuery as string);
-        const foundCities = cityList
-            .filter(cityData => cityData.normalized.startsWith(citySearchQuery))
-            .slice(0,9);
+        return res.status(400).send("Error: no search query found");
+    }
 
-        res.status(200).json(foundCities);
+    try {
+        const citiesResponse = await fetchCities(searchQuery as string, 10);
+        res.status(200).json(await citiesResponse.json());
+    } catch (err) {
+        console.error("Error fetching cities from Cities API endpoint: ", err)
+        res.status(500).send("Error looking up cities :(");
     }
 }
 
-const normalize = (str: string) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+async function fetchCities(searchQuery: string, limit: number) {
+    const url = `${CITIES_API_ENDPOINT}?search=${searchQuery}&top=${limit}`
+    const response = await fetch(url, { headers: { CITIES_API_KEY }});
+    return response;
+}

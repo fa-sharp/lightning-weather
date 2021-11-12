@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.12.2",
+    "@types/better-sqlite3": "^7.4.1",
+    "better-sqlite3": "^7.4.4",
     "chart.js": "^3.5.1",
     "lodash": "^4.17.21",
     "next": "^11.1.2",

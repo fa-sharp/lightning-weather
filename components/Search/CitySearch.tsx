@@ -43,8 +43,8 @@ const CitySearch = ({ onCityLoad }: CitySearchProps) => {
         setWaiting(false);
     }
 
-    /** The debounced version of onSearch. Will run only every 350ms, in order to limit calls to the server */
-    const debouncedSearchHandler = useMemo(() => debounce(onSearch, 350), []);
+    /** The debounced version of onSearch. Debouncing limits calls to the server */
+    const debouncedSearchHandler = useMemo(() => debounce(onSearch, 250), []);
 
     const onCitySelected = (city: City) => {
         setSelectedCity(city);

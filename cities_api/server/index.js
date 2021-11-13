@@ -49,6 +49,14 @@ app.get("/lookupNames", requireAPIKey, (req, res) => {
     }
 })
 
-
-app.listen(PORT);
+const server = app.listen(PORT);
 console.log("'Cities API' Express server listening on port " + PORT + "....");
+
+
+const shutdown = () => {
+    console.log("'Cities API' Express server shutting down...");
+    server.close(() => process.exit())
+}
+
+process.on("SIGTERM", shutdown)
+process.on("SIGINT", shutdown)

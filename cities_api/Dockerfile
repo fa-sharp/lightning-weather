@@ -1,10 +1,8 @@
-FROM node:16-alpine as builder
-RUN apk add --no-cache python3 make g++
-# RUN apk add g++ make py3-pip (alternative python install)
+FROM node:16-slim as builder
 RUN yarn add express better-sqlite3
 
 # multistage build (copy node_modules from above without including toolchain)
-FROM node:16-alpine as app
+FROM node:16-slim as app
 
 ENV NODE_ENV=production
 WORKDIR /usr/src/app

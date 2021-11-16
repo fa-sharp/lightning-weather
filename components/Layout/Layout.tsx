@@ -13,8 +13,6 @@ const Layout = ({ children }: LayoutProps) => {
             <Head>
                 <title>Lightning Weather</title>
                 <meta name="description" content="A little weather app" />
-                <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-                    rel="stylesheet"></link>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header />

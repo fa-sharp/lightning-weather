@@ -6,12 +6,9 @@
     max-width: 1000px;
 
     & > * {
-        margin: 1.1rem;
-
-        min-width: 18.75rem;
+        margin: 0.9rem;
+        min-width: 20rem;
         max-width: 22.5rem;
-
-        min-height: 13.75rem;
     }
 
     // Optional colors for city grid (a little fun with HSL and gradients):

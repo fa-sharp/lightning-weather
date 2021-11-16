@@ -24,7 +24,7 @@ export default async function handler(
 }
 
 async function fetchCities(searchQuery: string, limit: number) {
-    const url = `${CITIES_API_ENDPOINT}?search=${searchQuery}&top=${limit}`
-    const response = await fetch(url, { headers: { CITIES_API_KEY }});
+    const url = `${CITIES_API_ENDPOINT}?search=${encodeURIComponent(searchQuery)}&top=${limit}`
+    const response = await fetch(url, { headers: { CITIES_API_KEY, "User-Agent": "lightning-weather-vercel" }});
     return response;
 }

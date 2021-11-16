@@ -6,6 +6,9 @@
     flex-direction: column;
     align-items: center;
 
+    min-width: 18.75rem;
+    min-height: 13.75rem;
+    
     box-shadow: 0 0 7px 1px #6f6f6f;
     border-radius: 10px;
     padding: 5px;
@@ -34,7 +37,6 @@
     &.expanded {
         min-width: 25rem;
         min-height: 19rem;
-        margin: 0.5rem;
     }
 
     // Optional color
@@ -100,7 +102,7 @@
         background: transparent;
         border: solid 1px var(--day-border-color);
         border-radius: 8px;
-        padding: 5px 0 0;
+        padding: 5px 2px 0;
 
         font: inherit;
         font-size: 0.8rem;

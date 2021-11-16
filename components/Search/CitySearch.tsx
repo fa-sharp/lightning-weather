@@ -66,7 +66,7 @@ const CitySearch = ({ onCityLoad }: CitySearchProps) => {
             <span className={styles.citySearchContainer}>
 
                 <input ref={citySearchRef} id={styles.citySearchInput}
-                    name="citySearch" placeholder="City Name" autoFocus
+                    name="citySearch" placeholder="City Name 🔍" autoFocus
                     autoComplete="off" type="search" 
                     onChange={e => {immediateSearchHandler(e); debouncedSearchHandler(e);}} />
                 

@@ -1,15 +1,15 @@
 .weather {
+    position: relative;
     flex: 1 0 auto;
-
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
 
     margin: 1rem;
     width: 80%;
-    max-width: 380px;
+    max-width: 26rem;
 
     & > :last-child {
+        position: absolute;
+        top: 30%;
+        width: 100%;
         margin-bottom: 2rem;
     }
 }

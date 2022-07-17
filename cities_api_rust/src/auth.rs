@@ -1,6 +1,8 @@
 use rocket::http::Status;
 use rocket::request::{Outcome, Request, FromRequest};
 
+use crate::Config;
+
 pub struct ApiKey<'r>(&'r str);
 
 #[derive(Debug)]
@@ -15,13 +17,11 @@ impl<'r> FromRequest<'r> for ApiKey<'r> {
 
     async fn from_request(req: &'r Request<'_>) -> Outcome<Self, Self::Error> {
 
-        fn is_valid(key: &str) -> bool {
-            key == "fake"
-        }
+        let api_key = &req.rocket().state::<Config>().expect("Config not found!").api_key;
 
         match req.headers().get_one("cities_api_key") {
             None => Outcome::Failure((Status::BadRequest, ApiKeyError::Missing)),
-            Some(key) if is_valid(key) => Outcome::Success(ApiKey(key)),
+            Some(key) if key == api_key => Outcome::Success(ApiKey(key)),
             Some(_) => Outcome::Failure((Status::BadRequest, ApiKeyError::Invalid)),
         }
     }

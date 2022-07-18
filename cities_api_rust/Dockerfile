@@ -28,8 +28,9 @@ WORKDIR /app
 
 # Get compiled binaries from builder's cargo install directory
 COPY --from=builder /usr/local/cargo/bin/cities_api_rust /app/cities_api_rust
+COPY --from=builder /usr/src/app/Rocket.toml /app/Rocket.toml
+COPY --from=builder /usr/src/app/db/ /app/db/
 
 EXPOSE 8000
 
-# No CMD or ENTRYPOINT, see fly.toml with `cmd` override.
 CMD ["./cities_api_rust"]

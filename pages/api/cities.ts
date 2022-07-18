@@ -10,12 +10,12 @@ export default async function handler(
 ) {
     const { query: { search: searchQuery } } = req;
 
-    if (!searchQuery) {
+    if (!searchQuery || typeof searchQuery !== 'string') {
         return res.status(400).send("Error: no search query found");
     }
 
     try {
-        const citiesResponse = await fetchCities(searchQuery as string, 10);
+        const citiesResponse = await fetchCities(normalizeQuery(searchQuery), 10);
         res.status(200).json(await citiesResponse.json());
     } catch (err) {
         console.error("Error fetching cities from Cities API endpoint: ", err)
@@ -27,4 +27,9 @@ async function fetchCities(searchQuery: string, limit: number) {
     const url = `${CITIES_API_ENDPOINT}?search=${encodeURIComponent(searchQuery)}&top=${limit}`
     const response = await fetch(url, { headers: { CITIES_API_KEY, "User-Agent": "lightning-weather-vercel" }});
     return response;
+}
+
+/** Normalize, remove spaces, make lowercase */
+function normalizeQuery(str: string) { 
+    return str.normalize("NFD").replace(/[\u0300-\u036f]|\s+/g, "").toLowerCase();
 }

@@ -7,8 +7,14 @@ export default async function weatherHandler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const { query: { cityId, units } } = req;
-    const url = `${BASE_URL}?id=${cityId}&appid=${APP_ID}&units=${units}`;
+    const { query: { cityId, lat, lon, units } } = req;
+    const url = typeof cityId === 'string' ?
+        `${BASE_URL}?id=${cityId}&appid=${APP_ID}&units=${units}`
+        : typeof lat === 'string' && typeof lon === 'string' ?
+            `${BASE_URL}?lat=${lat}&lon=${lon}&appid=${APP_ID}&units=${units}`
+            : null;
+
+    if (!url) return res.status(400).json({ message: "Invalid request!" });
 
     await fetch(url)
         .then(
@@ -16,7 +22,7 @@ export default async function weatherHandler(
                 weatherResponse.json().then(data =>
                     res.status(weatherResponse.status).send(data)),
             err => {
-                res.status(404).json({ message: "Network/fetch error!", code: err.code});
+                res.status(404).json({ message: "Network/fetch error!", code: err.code });
             }
         );
 }

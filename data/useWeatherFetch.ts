@@ -15,10 +15,21 @@ const fetcher = (url: string) => fetch(url).then(res => {
     return res.json();
 });
 
-const useWeatherFetch = (cityId: number, units: WeatherUnits) => {
+const useWeatherFetch = ({ cityIdOrCoord, units }: {
+    cityIdOrCoord: number | { lat: number, lon: number } | null,
+    units: WeatherUnits
+}) => {
 
-    const url = `${BASE_URL}?cityId=${cityId}&units=${units}`
-    const { data, error } = useSWR(url, fetcher, {revalidateOnFocus: false, shouldRetryOnError: false, refreshInterval: 1000*60*4}); // refresh interval of four minutes
+    const url = typeof cityIdOrCoord === 'number' ?
+        `${BASE_URL}?cityId=${cityIdOrCoord}&units=${units}`
+        : cityIdOrCoord ? `${BASE_URL}?lat=${cityIdOrCoord.lat}&lon=${cityIdOrCoord.lon}&units=${units}`
+            : null;
+
+    const { data, error } = useSWR(url, fetcher, {
+        revalidateOnFocus: false,
+        shouldRetryOnError: false,
+        refreshInterval: 1000 * 60 * 4, // refresh interval of four minutes
+    });
 
     return [data, error];
 }

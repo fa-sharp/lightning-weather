@@ -87,6 +87,7 @@ const WeatherDisplay = ({ city, units = WeatherUnits.IMPERIAL, withColor = false
                         onClick={() => removeCity ? removeCity(city) : null} >
                         <span className="material-icons">clear</span>
                     </button>}
+                {!addButton && !removeButton && <button className={`${styles.controlButton} ${styles.editButton}`}></button>}
             </div>
         </section>
     )

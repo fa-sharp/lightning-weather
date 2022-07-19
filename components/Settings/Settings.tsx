@@ -30,8 +30,8 @@ const Settings = ({options, changeOption, showing}: Props) => {
     const currentUnits = (options.units === WeatherUnits.IMPERIAL);
     const changeUnits = (checked: boolean) => changeOption("units", checked ? WeatherUnits.IMPERIAL : WeatherUnits.METRIC);
 
-    const currentColor = options.withColor;
-    const changeColor = (withColor: boolean) => changeOption("withColor", withColor);
+    const toggleColor = (enabled: boolean) => changeOption("withColor", enabled);
+    const toggleDetectLocation = (enabled: boolean) => changeOption("detectLocation", enabled);
 
     const muiClasses = useStyles();
 
@@ -48,10 +48,17 @@ const Settings = ({options, changeOption, showing}: Props) => {
                     <Grid item>Imperial</Grid>
                 </Grid>
                 <Grid component="label" container alignItems="center" spacing={0}>
+                    <Grid item><b>Location: </b>Off</Grid>
+                    <Grid item>
+                    <Switch checked={options.detectLocation} name="detectLocation" size="small"
+                        onChange={(e) => toggleDetectLocation(e.target.checked)} /></Grid>
+                    <Grid item>On</Grid>
+                </Grid>
+                <Grid component="label" container alignItems="center" spacing={0}>
                     <Grid item><b>Colors: </b>Less</Grid>
                     <Grid item>
-                    <Switch checked={currentColor} name="colorOption" size="small"
-                        onChange={(e) => changeColor(e.target.checked)} /></Grid>
+                    <Switch checked={options.withColor} name="colorOption" size="small"
+                        onChange={(e) => toggleColor(e.target.checked)} /></Grid>
                     <Grid item>More</Grid>
                 </Grid>
             </FormGroup>

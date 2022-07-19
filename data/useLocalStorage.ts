@@ -10,7 +10,7 @@ const DEFAULT_CITIES = [
 
 const OPTIONS_KEY = "userOptions";
 const DEFAULT_OPTIONS: UserOptions = {
-    units: WeatherUnits.IMPERIAL, withColor: false 
+    units: WeatherUnits.IMPERIAL, withColor: false, detectLocation: true
 };
 
 const useLocalStorage = () => {

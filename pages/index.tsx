@@ -20,7 +20,7 @@ export default function Home() {
         </h1>
 
         {options && <MultiCityDisplay cities={savedCities} units={options.units} 
-          withColor={options.withColor} removeCity={removeCity} />}
+          detectLocation={options.detectLocation} withColor={options.withColor} removeCity={removeCity} />}
 
         {(savedCities.length < MAX_SAVED_CITIES) &&
           <Link href="/search">

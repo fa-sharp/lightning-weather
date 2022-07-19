@@ -12,7 +12,7 @@ interface MultiCityProps {
     removeCity: (city: City) => void
 }
 
-const MultiCityDisplay = ({cities, units, withColor=false, detectLocation=true, removeCity}: MultiCityProps) => {
+const MultiCityDisplay = ({cities, units, withColor=false, detectLocation=false, removeCity}: MultiCityProps) => {
     return (
         <div className={`${styles.grid} ${withColor ? styles.withColor : ""}`}>
             {detectLocation && <WeatherDisplay city="detect" units={units} />}

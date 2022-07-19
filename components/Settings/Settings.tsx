@@ -37,7 +37,7 @@ const Settings = ({options, changeOption, showing}: Props) => {
 
     return (
         <div className={`${styles.settings} ${showing ? styles.showing : ""}`}>
-            <FormGroup style={{alignItems: "flex-start"}}>
+            <FormGroup style={{alignItems: "flex-start", gap: 3 }}>
                 <Grid component="label" container alignItems="center" spacing={0}>
                     <Grid item><b>Units: </b>Metric</Grid>
                     <Grid item>

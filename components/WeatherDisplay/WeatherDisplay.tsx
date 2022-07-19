@@ -52,8 +52,7 @@ const WeatherDisplay = ({ city, units = WeatherUnits.IMPERIAL, withColor = false
     }
 
     const cityTitle = city === 'detect' ?
-        "📍My Location" :
-        `${city.name}${(city.state !== "") ? (', ' + city.state) : ""}`;
+        "📍My Location" : `${city.name}${(city.state !== "") ? (', ' + city.state) : ""}`;
 
     return (
         <section className={`${styles.weatherDisplay} ${withColor ? styles.withColor : ""} ${(showForecast || isGrowing) ? styles.expanded : ""}`}

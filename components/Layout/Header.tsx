@@ -30,10 +30,10 @@ const Header = () => {
         <nav className={styles.header}>
             <div className={styles.navLeft}>
                 <Link href="/">
-                    <a>Home</a>
+                Home
                 </Link>
                 <Link href="/search">
-                    <a>Search</a>
+                    Search
                 </Link>
             </div>
             <div className={styles.navRight}>

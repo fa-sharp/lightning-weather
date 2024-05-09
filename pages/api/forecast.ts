@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const APP_ID = process.env.OPENWEATHER_API_KEY;
-const BASE_URL = "https://api.openweathermap.org/data/2.5/onecall";
+const BASE_URL = "https://api.openweathermap.org/data/3.0/onecall";
 const STATIC_QUERIES = `exclude=current,minutely&appid=${APP_ID}`;
 
 export default async function forecastHandler(

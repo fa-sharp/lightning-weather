@@ -24,7 +24,7 @@ const MultiCityDisplay = ({cities, units, withColor=false, detectLocation=false,
             {/* If no cities are showing, display an Add button */}
             {(cities.length === 0) &&
                 <Link href="/search" passHref>
-                    <button className={styles.noCitiesButton}><a>Add City</a></button>
+                    <button className={styles.noCitiesButton}>Add City</button>
                 </Link>}
         </div>
     )

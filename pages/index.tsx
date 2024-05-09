@@ -23,10 +23,9 @@ export default function Home() {
           detectLocation={options.detectLocation} withColor={options.withColor} removeCity={removeCity} />}
 
         {(savedCities.length < MAX_SAVED_CITIES) &&
-          <Link href="/search">
-            <a className={styles.addCityLink} aria-label="Add City" title="Add City">
+          <Link href="/search" className={styles.addCityLink} aria-label="Add City" title="Add City">
               <span className="material-icons md-48 gray-hover">add_circle</span>
-            </a>
+            
           </Link>}
       </main>
     </Layout>
